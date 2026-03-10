@@ -1,16 +1,15 @@
-#' `fxn_figureSummary.R` - Build summary of figure based on user input
+#' `fxn_navsetCardTabSummary.R` - Build summary of estimated water use based on user input
 #' 
 #' @param azmetStation - AZMet station selection by user
-#' @param inData - Data table of seasonal chill accumulation by year
+#' @param inData - Data table of seasonal water use estimates by year
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param chillVariable - Chill variable selected by user
-#' @return `figureSummary` - Summary of figure based on user inputs
+#' @return `navsetCardTabSummary` - Summary of estimated water use based on user inputs
 
 
-fxn_figureSummary <- function(azmetStation, startDate, endDate) {
+fxn_navsetCardTabSummary <- function(azmetStation, startDate, endDate) {
   
-  figureSummary <- 
+  navsetCardTabSummary <- 
     htmltools::p(
       htmltools::HTML(
         paste0(
@@ -18,8 +17,8 @@ fxn_figureSummary <- function(azmetStation, startDate, endDate) {
         ),
       ),
       
-      class = "figure-summary"
+      class = "navset-card-tab-summary"
     )
   
-  return(figureSummary)
+  return(navsetCardTabSummary)
 }

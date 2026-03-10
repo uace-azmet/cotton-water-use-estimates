@@ -1,11 +1,11 @@
-#' `fxn_figureTitle.R` - Build title for figure
+#' `fxn_navsetCardTabTitle.R` - Build title for navset card tab section
 #' 
 #' @param azmetStation - AZMet station selected by user
-#' @return `figureTitle` - Title for figure based on selected station
+#' @return `navsetCardTabTitle` - Title for navset card tab section based on user input
 
 
-fxn_figureTitle <- function(azmetStation, titleIcon) {
-  figureTitle <- 
+fxn_navsetCardTabTitle <- function(azmetStation, titleIcon) {
+  navsetCardTabTitle <- 
     htmltools::p(
       htmltools::HTML(
         paste0(
@@ -23,14 +23,14 @@ fxn_figureTitle <- function(azmetStation, titleIcon) {
           bslib::tooltip(
             bsicons::bs_icon("info-circle"),
             "Select from the tabs below to view different presentations of the data.",
-            id = "infoFigureTitle",
+            id = "infoNavsetCardTabTitle",
             placement = "right"
           )
         ),
       ),
       
-      class = "figure-title"
+      class = "navset-card-tab-title"
     )
   
-  return(figureTitle)
+  return(navsetCardTabTitle)
 }
