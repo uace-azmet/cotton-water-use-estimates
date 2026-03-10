@@ -1,0 +1,453 @@
+/* class */
+
+
+[data-title]:after {
+    background-color: rgba(30,82,136,0.8) !important;
+    border-radius: var(--bs-border-radius) !important;
+    color: #FFFFFF !important;
+    content: attr(data-title);
+    font-family: "Open Sans", verdana, arial, sans-serif !important;
+    font-weight: normal !important;
+}
+
+[data-title]:before {
+    border-left-color: rgba(30,82,136,0.8) !important;
+    content: attr(data-title);
+}
+
+/*.accordion {
+  padding-bottom: 24px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  padding-top: 0px !important;
+}
+
+.accordion-button {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}*/
+
+.bolder-icon {
+  stroke-width: 0.5;
+  stroke: currentColor; /* Inherits the 'color' property of the parent */
+}
+
+/* .bslib-sidebar-layout.bslib-mb-spacing.html-fill-item {
+  border-width: 0px !important;
+  margin-bottom: 0px !important;
+} */
+
+/* https://stackoverflow.com/questions/77114751/is-it-possible-to-modify-the-arrow-that-collapses-the-sidebar */
+.bslib-sidebar-layout > .collapse-toggle > .collapse-icon {
+  fill: #989898 !important;
+}
+
+.bslib-sidebar-resize-handle {
+  display: none;
+}
+
+.btn {
+  background-color: #FFFFFF; 
+  border-color: #001C48; 
+  color: #001C48;
+  margin-top: 48px !important;
+}
+
+.btn:active {
+  background-color: #1E5288 !important;
+  border-color: #1E5288 !important; 
+  box-shadow: 0 0 0 0.1rem rgb(30, 82, 136, 0.2) !important;
+  color: #FFFFFF !important;
+}
+
+.btn:focus {
+  background-color: #FFFFFF;
+  border-color: #001C48; 
+  box-shadow: 0 0 0 0.1rem rgb(0, 28, 72, 0.2);
+  color: #001C48;
+}
+
+.btn:hover {
+  background-color: #001C48;
+  border-color: #001C48; 
+  color: #FFFFFF;
+}
+
+.century.active.disabled.focused {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.century.active.disabled.focused:hover {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.control-label {
+  color: var(--bs-body-color); 
+  font-weight: bold;
+}
+
+.data-options-title {
+  padding-bottom: 1rem !important;
+}
+
+.datepicker {
+  background-color: #FFFFFF;
+  box-shadow: 0 -6px 12px rgb(var(--bs-body-color-rgb, 0, 0, 0), 0.1);
+  border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
+  color: var(--bs-body-color);
+}
+
+.datepicker table tr td.active.day { /* current month and selected day, no hover */
+  background-color: rgb(226, 233, 235);
+  border-color: none;
+  color: var(--bs-body-color);
+  text-shadow: none;
+}
+
+.datepicker table tr td.active.day:hover { /*  current month and selected day, hover */
+  background-color: rgb(226, 233, 235);
+  border-color: none;
+  color: var(--bs-body-color);
+  text-shadow: none;
+}
+
+.datepicker table tr td.day:hover { /*  unselected month and day, hover */
+  background-color: rgb(226, 233, 235);
+}
+
+.datepicker table tr td.disabled.day:hover { /*  unselected disabled month and day, hover */
+  background-color: #FFFFFF;
+}
+
+.datepicker-switch:hover {
+  background-color: rgb(226, 233, 235) !important;
+}
+
+.decade:hover {
+  background-color: rgb(226, 233, 235) !important;
+}
+
+.decade.active {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.active:hover {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.disabled {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.disabled:hover {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused.active {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused.active:hover {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused.disabled {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused.disabled:hover {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.figure-caption {
+  border-bottom: none !important;
+  color: #606060; 
+  font-size: 0.85rem;
+  font-style: normal;
+  margin-top: 0.5rem;
+}
+
+.figure-summary {
+  color: #191919;
+  font-weight: plain;
+  margin-bottom: 0px!important;
+  /* margin-top: 4px !important;
+  /* */
+  padding-bottom: 1rem !important;
+}
+
+.figure-title {
+  padding-bottom: 1rem !important;
+}
+
+.form-control:focus {
+  border: 1px solid #CCCCCC !important;
+  box-shadow: 0 0 0 0.1rem #0000001A;
+}
+
+.main.bslib-gap-spacing.html-fill-container {
+  padding-bottom: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 24px;
+}
+
+.modal-body {
+  color: var(--bs-body-color) !important;
+}
+
+.modal-content {
+  border-radius: var(--bs-border-radius) !important;
+  box-shadow: 0px 1px 2px rgba(var(--bslib-box-shadow-color-rgb)) !important;
+  padding-top: 0px !important;
+}
+
+.modal-dialog.modal-sm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-header {
+  padding-bottom: 0px !important;
+}
+
+.modal-title {
+  font-weight: normal !important; 
+  margin-top: 0px !important;
+}
+
+.modebar-container {
+  top: -8px !important;
+}
+
+.month:hover {
+  background-color: rgb(226, 233, 235) !important;
+}
+
+.month.active {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.month.active:hover {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.month.disabled {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.month.disabled:hover {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused.active {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused.active:hover {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused.disabled {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused.disabled:hover {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.next:hover {
+  background-color: rgb(226, 233, 235) !important;
+}
+
+.page-bottom-text {
+  color: #191919;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 3rem !important;
+}
+
+.prev:hover {
+  background-color: rgb(226, 233, 235) !important;
+}
+
+.selectize-dropdown .active {
+  background-color: rgb(226, 233, 235) !important; 
+  color: var(--bs-body-color) !important;
+}
+
+.selectize-dropdown .active:not(.selected) {
+  background-color: rgb(226, 233, 235); 
+  color: var(--bs-body-color);
+}
+
+.selectize-dropdown .selected:not(.active) {
+  background-color: var(--bs-body-bg); 
+  color: var(--bs-body-color);
+}
+
+.selectize-input {
+  border-color: #CCCCCC !important;
+}
+
+.selectize-input.items.full.has-options.has-items {
+  border-radius: 0px !important;
+}
+
+.shiny-notification {
+  background-color: rgba(30,82,136,0.8) !important; 
+  border-radius: var(--bs-border-radius) !important;
+  box-shadow: 0px 1px 2px rgba(var(--bslib-box-shadow-color-rgb)) !important;
+  color: #FFFFFF !important;
+  font-size: 12pt !important;
+  font-style: italic !important; 
+  font-weight: normal !important;
+  left: calc(50% - 150px) !important;
+  position: fixed !important; 
+  top: calc(50%) !important; 
+}
+
+.sidebar-content {
+  padding-bottom: 24px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  padding-top: 24px !important;
+}
+
+.table-condensed {
+  background-color: #FFFFFF; 
+  color: var(--bs-body-color);
+}
+
+.year:hover {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.year.active {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.year.active.focused {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.year.active.focused:hover {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.year.disabled {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.year.disabled:hover {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.year.focused {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+
+/* id */
+
+
+#datepickerModal {
+  color: #989898 !important;
+  font-size: 1rem;
+  text-align: left;
+}
+
+#estimateWaterUse {
+  margin-top: 24px !important;
+}
