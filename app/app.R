@@ -158,7 +158,7 @@ server <- function(input, output, session) {
     )
   })
   
-  navsetCardTabTitle <- shiny::eventReactive(azDaily(), {
+  navsetCardTabTitle <- shiny::eventReactive(list(azDaily(), navsetCardTabTitleIcon()), {
     fxn_navsetCardTabTitle(
       azmetStation = input$azmetStation,
       navsetCardTabTitleIcon = navsetCardTabTitleIcon()

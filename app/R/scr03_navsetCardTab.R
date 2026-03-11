@@ -5,7 +5,7 @@ navsetCardTab <- bslib::navset_card_tab(
   sidebar = NULL,
   header = NULL,
   footer = NULL,
-  height = 400,
+  height = 500,
   # height = 700,
   full_screen = TRUE,
   # wrapper = card_body,
