@@ -7,6 +7,7 @@
     color: #FFFFFF !important;
     content: attr(data-title);
     font-family: "Open Sans", verdana, arial, sans-serif !important;
+    font-family: "proxima-nova", "calibri", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
     font-weight: normal !important;
 }
 
@@ -15,31 +16,22 @@
     content: attr(data-title);
 }
 
-/*.accordion {
-  padding-bottom: 24px !important;
-  padding-left: 24px !important;
-  padding-right: 24px !important;
-  padding-top: 0px !important;
-}
-
-.accordion-button {
-  padding-left: 24px !important;
-  padding-right: 24px !important;
-}*/
-
 .bolder-icon {
   stroke-width: 0.5;
   stroke: currentColor; /* Inherits the 'color' property of the parent */
 }
 
-/* .bslib-sidebar-layout.bslib-mb-spacing.html-fill-item {
-  border-width: 0px !important;
-  margin-bottom: 0px !important;
-} */
-
 /* https://stackoverflow.com/questions/77114751/is-it-possible-to-modify-the-arrow-that-collapses-the-sidebar */
 .bslib-sidebar-layout > .collapse-toggle > .collapse-icon {
   fill: #989898 !important;
+}
+
+.bslib-sidebar-layout > .collapse-toggle:hover {
+  background-color: #f8f8f8 !important;
+}
+
+.bslib-sidebar-layout > .collapse-toggle:hover > .collapse-icon {
+  fill: #191919 !important;
 }
 
 .bslib-sidebar-resize-handle {
@@ -93,6 +85,7 @@
 }
 
 .data-options-title {
+  margin-top: 1.5rem;
   padding-bottom: 1rem !important;
 }
 
@@ -323,6 +316,7 @@
 }
 
 .navset-card-tab-title {
+  margin-top: 1.5rem;
   padding-bottom: 1rem !important;
 }
 

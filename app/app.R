@@ -72,7 +72,7 @@ server <- function(input, output, session) {
     
     shiny::updateDateInput(
       inputId = "startDate",
-      label = "Start Date",
+      label = "Planting Date",
       value = stationStartDateSelected,
       min = stationStartDateMinimum,
       max = Sys.Date() - 1
@@ -87,42 +87,18 @@ server <- function(input, output, session) {
     )
   })
   
-  
   shiny::observeEvent(input$navsetCardTab, {
     if (input$navsetCardTab == "barChart") {
-      titleIcon <- "bar-chart-fill"
+      navsetCardTabTitleIcon("bar-chart-fill")
       print("bar-chart-fill")
     } else if (input$navsetCardTab == "table") {
-      titleIcon <- "table"
+      navsetCardTabTitleIcon("table")
       print("table")
     } else if (input$navsetCardTab == "timeSeries") {
-      titleIcon <- "graph-up"
+      navsetCardTabTitleIcon("graph-up")
       print("graph-up")
     }
   })
-  
-  # shiny::eventReactive(input$navsetCardTab, {
-  #   if (input$navsetCardTab == "barChart") {
-  #     titleIcon <- "bar-chart-fill"
-  #     print("bar-chart-fill")
-  #   } else if (input$navsetCardTab == "table") {
-  #     titleIcon <- "table"
-  #     print("table")
-  #   } else if (input$navsetCardTab == "timeSeries") {
-  #     titleIcon <- "graph-up"
-  #     print("graph-up")
-  #   }
-  # })
-  
-  # output$titleIcon <- titleIcon()
-  # 
-  # Reactives -----
-  
-  # figureTitle <- shiny::eventReactive(seasonalTotals(), {
-  #   fxn_figureTitle(
-  #     azmetStation = input$azmetStation
-  #   )
-  # })
   
   
   # Outputs -----
@@ -136,7 +112,10 @@ server <- function(input, output, session) {
   })
   
   output$navsetCardTabTitle <- shiny::renderUI({
-    fxn_navsetCardTabTitle(azmetStation = input$azmetStation, titleIcon = titleIcon())
+    fxn_navsetCardTabTitle(
+      azmetStation = input$azmetStation, 
+      navsetCardTabTitleIcon = navsetCardTabTitleIcon()
+    )
     # figureTitle()
   })
   

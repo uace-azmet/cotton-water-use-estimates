@@ -18,7 +18,7 @@ pageSidebar <- bslib::sidebar(
     htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
     bslib::tooltip(
       bsicons::bs_icon("info-circle"),
-      "Select an AZMet station and dates for the start and end of the period of interest. Then, click or tap 'ESTIMATE WATER USE'.",
+      "Select an AZMet station, a planting date, and a date for the end of the period of interest. Then, click or tap 'ESTIMATE WATER USE'.",
       id = "infoDataOptions",
       placement = "right"
     ),
@@ -35,7 +35,7 @@ pageSidebar <- bslib::sidebar(
   
   shiny::dateInput(
     inputId = "startDate",
-    label = "Start Date",
+    label = "Planting Date",
     value = initialStartDate,
     min = initialStartDateMinimum,
     max = Sys.Date() - 1,

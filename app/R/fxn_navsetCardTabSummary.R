@@ -13,7 +13,7 @@ fxn_navsetCardTabSummary <- function(azmetStation, startDate, endDate) {
     htmltools::p(
       htmltools::HTML(
         paste0(
-          "Estimated cotton water use at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", "x.x inches</b>. This is the same as the accumulation during this same month-day period in 2025, and the same as the station average."
+          "Estimated cotton water use at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", "x.x inches", "</b>. This is the same as the accumulation during this same month-day period in 2025, and the same as the station average."
         ),
       ),
       
