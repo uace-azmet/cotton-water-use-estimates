@@ -1,6 +1,7 @@
 #' `fxn_navsetCardTabTitle.R` - Build title for navset card tab section
 #' 
 #' @param azmetStation - AZMet station selected by user
+#' @param navsetCardTabTitleIcon - Title icon based on selected tab
 #' @return `navsetCardTabTitle` - Title for navset card tab section based on user input
 
 
