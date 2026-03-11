@@ -98,6 +98,12 @@ server <- function(input, output, session) {
     )
   })
   
+  shiny::observeEvent(input$estimateWaterUse, {
+    if (input$startDate > input$endDate) {
+      shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
+    }
+  })
+  
   # To update icon in navsetCardTab title
   shiny::observeEvent(input$navsetCardTab, {
     if (input$navsetCardTab == "barChart") {
@@ -152,7 +158,7 @@ server <- function(input, output, session) {
     )
   })
   
-  navsetCardTabTitle <- shiny::eventReactive(azDaily(), {
+  navsetCardTabTitle <- shiny::eventReactive(list(azDaily(), navsetCardTabTitleIcon()), {
     fxn_navsetCardTabTitle(
       azmetStation = input$azmetStation,
       navsetCardTabTitleIcon = navsetCardTabTitleIcon()
