@@ -214,4 +214,4 @@ initialStartDateMinimum <- initialStationStartDate
 
 # Other --
 
-titleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
+navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
