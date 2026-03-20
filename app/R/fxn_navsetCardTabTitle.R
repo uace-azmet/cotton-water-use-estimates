@@ -1,8 +1,8 @@
-#' `fxn_navsetCardTabTitle.R` - Build title for navset card tab section
+#' `fxn_navsetCardTabTitle.R` - Build title for navset card tab section of page
 #' 
-#' @param azmetStation - AZMet station selected by user
+#' @param azmetStation - AZMet station selection by user
 #' @param navsetCardTabTitleIcon - Title icon based on selected tab
-#' @return `navsetCardTabTitle` - Title for navset card tab section based on user input
+#' @return `navsetCardTabTitle` - Title for navset card tab section of page based on user input
 
 
 fxn_navsetCardTabTitle <- function(azmetStation, navsetCardTabTitleIcon) {
@@ -21,18 +21,18 @@ fxn_navsetCardTabTitle <- function(azmetStation, navsetCardTabTitleIcon) {
           toupper(
             htmltools::HTML(
               paste0(
-                "<strong>Estimated Cotton Water Use at the AZMet ", azmetStation, " Station</strong>"
-              )
+                "<strong>Total Evapotranspiration at the AZMet ", azmetStation, " Station</strong>"
+              ),
             )
           ),
-          htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
+          htmltools::HTML("&nbsp;"),
           bslib::tooltip(
             bsicons::bs_icon("info-circle"),
-            "Select from the tabs below to view different presentations of the data.",
+            "In addition to the following summary, select from the tabs below to view the calculated total in different contexts.",
             id = "infoNavsetCardTabTitle",
             placement = "right"
           )
-        ),
+        )
       ),
       
       class = "navset-card-tab-title"

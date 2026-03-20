@@ -1,4 +1,4 @@
-pageSidebar <- bslib::sidebar(
+sidebar <- bslib::sidebar(
   width = 300,
   position = "left",
   open = list(desktop = "open", mobile = "always-above"),
@@ -12,10 +12,9 @@ pageSidebar <- bslib::sidebar(
   padding = NULL,
   
   htmltools::p(
-    bsicons::bs_icon("sliders", class = "bolder-icon"),
-    htmltools::HTML("&nbsp;"),
-    htmltools::HTML("<strong>DATA OPTIONS</strong>"),
-    htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
+    bsicons::bs_icon("sliders", class = "bolder-icon"), 
+    htmltools::HTML("&nbsp;"), 
+    htmltools::HTML("<strong>DATA OPTIONS</strong>&nbsp;"),
     bslib::tooltip(
       bsicons::bs_icon("info-circle"),
       "Select an AZMet station, a planting date, and a date for the end of the period of interest. Then, click or tap 'ESTIMATE WATER USE'.",
@@ -27,16 +26,23 @@ pageSidebar <- bslib::sidebar(
   ),
   
   shiny::selectInput(
-    inputId = "azmetStation",
+    inputId = "azmetStation", 
     label = "AZMet Station",
     choices = azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name,
     selected = azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
   ),
   
+  shiny::selectInput(
+    inputId = "etEquation",
+    label = "Equation",
+    choices = etEquations,
+    selected = "Penman-Monteith"
+  ),
+  
   shiny::dateInput(
     inputId = "startDate",
     label = "Planting Date",
-    value = initialStartDate,
+    value = Sys.Date() - lubridate::dweeks(x = 1),
     min = initialStartDateMinimum,
     max = Sys.Date() - 1,
     format = "MM d, yyyy",
@@ -63,5 +69,5 @@ pageSidebar <- bslib::sidebar(
     inputId = "estimateWaterUse",
     label = "ESTIMATE WATER USE",
     class = "btn btn-block btn-blue"
-  )
+  )   
 ) # bslib::sidebar()

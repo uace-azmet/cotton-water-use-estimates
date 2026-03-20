@@ -1,0 +1,87 @@
+#' `fxn_navsetCardBarChartCaption.R` - Build caption for bar chart based on user input
+#' 
+#' @param azmetStation AZMet station selection by user
+#' @param inData - Data table [[2]] from `fxn_totalEvapotranspiration.R`
+#' @param startDate - Start date of period of interest
+#' @param endDate - End date of period of interest
+#' @param etEquation - ET equation selection by user
+#' @return `navsetCardBarChartCaption` Caption for bar chart based on selected station
+
+
+fxn_navsetCardBarChartCaption <- function(azmetStation, inData, startDate, endDate, etEquation) {
+  
+  azmetStationStartDate <- 
+    dplyr::filter(
+      azmetStationMetadata, 
+      meta_station_name == azmetStation
+    ) %>% 
+    dplyr::pull(start_date)
+  
+  if (nrow(inData) == 1) {
+    standardText <- 
+      paste0(
+        "Total evapotranspiration (black bar in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+      )
+  } else {
+    standardText <- 
+      paste0(
+        "Total evapotranspiration for the current year (black bar in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Totals for past years (gray bars in graph) are based on the same start and end month and day, but during those respective years. Average total evapotranspiration is calculated from values of all individual years shown above. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+      )
+  }
+  
+  variableKeyText <- 
+    "Variable key: <strong>ET<sub>cumulative</sub> (in)</strong> accumulation of daily total evapotranspiration in inches"
+  
+  # Account for multi-month absence of YUG data in 2021
+  nonOperational <- 0
+  
+  if (azmetStation == "Yuma N.Gila") {
+    nodataDateRange <-
+      lubridate::interval(
+        start = lubridate::date("2021-06-16"),
+        end = lubridate::date("2021-10-21")
+      )
+
+    while (startDate >= azmetStationStartDate) {
+      userDateRange <- lubridate::interval(start = startDate, end = endDate)
+
+      if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = userDateRange) == TRUE) {
+        nonOperational <- 1
+      }
+
+      startDate <- min(seq(startDate, length = 2, by = "-1 year"))
+      endDate <- min(seq(endDate, length = 2, by = "-1 year"))
+    }
+  }
+  
+  # Generate figure footer based on presence/absence of non-operational dates
+  if (azmetStation == "Yuma N.Gila" & nonOperational == 1) {
+    navsetCardBarChartCaption <- 
+      htmltools::p(
+        htmltools::HTML(
+          paste(
+            standardText,
+            "However, we do not show total evapotranspiration for the year with a month-day period that overlaps the period from June 16, 2021 through October 10, 2021, when the ", azmetStation, " station was not in operation.",
+            variableKeyText,
+            sep = " "
+          )
+        ),
+        
+        class = "navset-card-caption"
+      )
+  } else {
+    navsetCardBarChartCaption <- 
+      htmltools::p(
+        htmltools::HTML(
+          paste(
+            standardText,
+            variableKeyText,
+            sep = " "
+          )
+        ), 
+        class = "navset-card-caption"
+      )
+  }
+  
+  return(navsetCardBarChartCaption)
+}
