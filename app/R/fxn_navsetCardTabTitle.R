@@ -21,14 +21,14 @@ fxn_navsetCardTabTitle <- function(azmetStation, navsetCardTabTitleIcon) {
           toupper(
             htmltools::HTML(
               paste0(
-                "<strong>Total Evapotranspiration at the AZMet ", azmetStation, " Station</strong>"
+                "<strong>Estimated cotton water use at the AZMet ", azmetStation, " Station</strong>"
               ),
             )
           ),
           htmltools::HTML("&nbsp;"),
           bslib::tooltip(
             bsicons::bs_icon("info-circle"),
-            "In addition to the following summary, select from the tabs below to view the calculated total in different contexts.",
+            "In addition to the following summary, select from the tabs below to view the estimated water use in different contexts.",
             id = "infoNavsetCardTabTitle",
             placement = "right"
           )

@@ -80,7 +80,7 @@ server <- function(input, output, session) {
     
     shiny::updateDateInput(
       inputId = "startDate",
-      label = "Start Date",
+      label = "Planting Date",
       value = stationStartDateSelected,
       min = stationStartDateMinimum,
       max = Sys.Date() - 1
@@ -208,7 +208,7 @@ server <- function(input, output, session) {
     )
     
     idEstimateWaterUse <- shiny::showNotification(
-      ui = "Calculating total evapotranspiration . . .",
+      ui = "Estimating cotton water use . . .",
       action = NULL,
       duration = NULL,
       closeButton = FALSE,
@@ -237,14 +237,14 @@ server <- function(input, output, session) {
   })
   
   output$downloadCSV <- shiny::downloadHandler(
-    filename = function() {"AZMet-total-evaporation-calculator.csv"},
+    filename = function() {"AZMet-cotton-water-use-estimates.csv"},
     content = function(file) {
       vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = ",")
     }
   )
   
   output$downloadTSV <- shiny::downloadHandler(
-    filename = function() {"AZMet-total-evaporation-calculator.tsv"},
+    filename = function() {"AZMet-cotton-water-use-estimates.tsv"},
     content = function(file) {
       vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = "\t")
     }
