@@ -42,8 +42,8 @@ sidebar <- bslib::sidebar(
   shiny::dateInput(
     inputId = "startDate",
     label = "Planting Date",
-    value = Sys.Date() - lubridate::dweeks(x = 1),
-    min = initialStartDateMinimum,
+    value = initialStartDate,
+    min = initialStationStartDate,
     max = Sys.Date() - 1,
     format = "MM d, yyyy",
     startview = "month",
@@ -55,8 +55,8 @@ sidebar <- bslib::sidebar(
   shiny::dateInput(
     inputId = "endDate",
     label = "End Date",
-    value = Sys.Date() - 1,
-    min = Sys.Date() - lubridate::years(1),
+    value = initialEndDate,
+    min = initialStationStartDate,
     max = Sys.Date() - 1,
     format = "MM d, yyyy",
     startview = "month",

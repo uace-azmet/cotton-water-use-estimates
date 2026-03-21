@@ -65,8 +65,6 @@ initialStation <-
   ) %>% 
   dplyr::pull(meta_station_name)
 
-# initialStationStartDate <- dplyr::filter(activeStations, meta_station_name == initialStation)$start_date
-
 navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
 
 showNavsetCardTab <- reactiveVal(FALSE)
@@ -229,14 +227,27 @@ dailyVarsMeasured <-
 
 # Datepicker --
 
-# NEED TO ADJUST TO HAVE CALENDAR LIKE COTTON HEAT STRESS (JAN 1 START) + 'SMART' START DATE FOR NEW STATIONS
+if (Sys.Date() < as.Date(paste0(lubridate::year(Sys.Date()), "-02-02"))) {
+  initialStartDate <- 
+    as.Date(paste0((lubridate::year(Sys.Date()) - 1), "-02-01"))
+} else {
+  initialStartDate <- 
+    as.Date(paste0(lubridate::year(Sys.Date()), "-02-01"))
+}
 
-initialStationStartDate <- 
-  dplyr::filter(activeStations, meta_station_name == initialStation) %>% 
+if (Sys.Date() < as.Date(paste0(lubridate::year(Sys.Date()), "-02-02"))) {
+  initialEndDate <- 
+    as.Date(paste0((lubridate::year(Sys.Date()) - 1), "-11-15"))
+} else {
+  initialEndDate <- 
+    (Sys.Date() - 1)
+}
+
+initialStationStartDate <-
+  dplyr::filter(activeStations, meta_station_name == initialStation) %>%
   dplyr::pull(start_date)
 
-if (initialStationStartDate > Sys.Date() - lubridate::years(1)) {
-  initialStartDateMinimum <- initialStationStartDate
-} else {
-  initialStartDateMinimum <- Sys.Date() - lubridate::years(1)
+if (initialStationStartDate > initialStartDate) {
+  initialStartDate <- initialStationStartDate
 }
+

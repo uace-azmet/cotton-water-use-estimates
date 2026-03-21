@@ -58,13 +58,15 @@ server <- function(input, output, session) {
       dplyr::filter(azmetStationMetadata, meta_station_name == input$azmetStation) %>% 
       dplyr::pull(start_date)
     
-    if (stationStartDate > Sys.Date() - lubridate::years(1)) {
-      stationStartDateMinimum <- stationStartDate
-      stationEndDateMinimum <- stationStartDate
-    } else {
-      stationStartDateMinimum <- Sys.Date() - lubridate::years(1)
-      stationEndDateMinimum <- Sys.Date() - lubridate::years(1)
-    }
+    # if (stationStartDate > initialStartDate) {
+    #   stationStartDateMinimum <- stationStartDate
+    #   stationEndDateMinimum <- stationStartDate
+    # } else {
+    #   stationStartDateMinimum <- Sys.Date() - lubridate::years(1)
+    #   stationEndDateMinimum <- Sys.Date() - lubridate::years(1)
+    # }
+    stationStartDateMinimum <- stationStartDate
+    stationEndDateMinimum <- stationStartDate
     
     if (stationStartDate > input$startDate) {
       stationStartDateSelected <- stationStartDate
