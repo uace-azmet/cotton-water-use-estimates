@@ -11,7 +11,7 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
   currentYear <- lubridate::year(endDate)
   currentYearTotal <- 
     dplyr::filter(inData, endDateYear == currentYear) %>% 
-    dplyr::pull(etTotal)
+    dplyr::pull(waterUseTotal)
   
   # For stations with only one year of data
   if (nrow(inData) == 1) {
@@ -26,10 +26,10 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
         class = "figure-summary"
       )
   } else {
-    averageTotal <- mean(inData$etTotal, na.rm = TRUE)
+    averageTotal <- mean(inData$waterUseTotal, na.rm = TRUE)
     previousYear <- currentYear - 1
     previousYearText <- dplyr::filter(inData, endDateYear == previousYear)$dateYearLabel
-    previousYearTotal <- dplyr::filter(inData, endDateYear == previousYear)$etTotal
+    previousYearTotal <- dplyr::filter(inData, endDateYear == previousYear)$waterUseTotal
     
     differenceAverage <- currentYearTotal - averageTotal
     differencePreviousYear <- currentYearTotal - previousYearTotal

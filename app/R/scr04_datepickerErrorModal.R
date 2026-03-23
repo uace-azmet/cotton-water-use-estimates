@@ -1,7 +1,7 @@
 datepickerErrorModal <- 
   shiny::modalDialog(
     shiny::em(
-      "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+      "Please select a 'Planting Date' that is earlier than or the same as the 'End Date'."
     ),
     easyClose = FALSE,
     fade = FALSE,

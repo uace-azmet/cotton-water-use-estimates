@@ -1,58 +1,38 @@
 #' `fxn_navsetCardTable.R` - Build summary table with daily data
 #' 
-#' @param inData - Data table [[1]] from `fxn_totalEvapotranspiration.R`
+#' @param inData - Data table [[1]] from `fxn_waterUse.R`
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param etEquation - Evapotranspiration equation selection by user
 #' @return `navsetCardTable` - Summary table of daily data, reactable format
 
 
-fxn_navsetCardTable <- function(inData, startDate, endDate, etEquation) {
+fxn_navsetCardTable <- function(inData, startDate, endDate) {
   
   # Inputs -----
   
   inData <- inData %>% 
     dplyr::filter(datetime >= startDate & datetime <= endDate)
   
-  if (etEquation == "Original AZMet") {
-    inData <- inData %>% 
-      dplyr::select(
-        dplyr::all_of(
-          c(
-            "meta_station_name",
-            "datetime",
-            "day_of_period",
-            "eto_azmet_in", 
-            "eto_azmet_in_acc", 
-            "precip_total_in", 
-            "precip_total_in_acc"
-          )
+  inData <- inData %>%
+    dplyr::select(
+      dplyr::all_of(
+        c(
+          "meta_station_name",
+          "datetime",
+          "day_of_period",
+          "eto_pen_mon_in", 
+          "eto_pen_mon_in_acc",
+          "heat_units_55F",
+          "heat_units_55F_acc",
+          "precip_total_in", 
+          "precip_total_in_acc"
         )
-      ) %>% 
-      dplyr::rename(
-        et_total_in = eto_azmet_in,
-        et_total_in_acc = eto_azmet_in_acc
       )
-  } else if (etEquation == "Penman-Monteith") {
-    inData <- inData %>%
-      dplyr::select(
-        dplyr::all_of(
-          c(
-            "meta_station_name",
-            "datetime",
-            "day_of_period",
-            "eto_pen_mon_in", 
-            "eto_pen_mon_in_acc", 
-            "precip_total_in", 
-            "precip_total_in_acc"
-          )
-        )
-      ) %>% 
-      dplyr::rename(
-        et_total_in = eto_pen_mon_in,
-        et_total_in_acc = eto_pen_mon_in_acc
-      )
-  }
+    ) %>% 
+    dplyr::rename(
+      et_total_in = eto_pen_mon_in,
+      et_total_in_acc = eto_pen_mon_in_acc
+    )
   
   
   # Table -----
@@ -138,6 +118,32 @@ fxn_navsetCardTable <- function(inData, startDate, endDate, etEquation) {
               )
             ),
           format = reactable::colFormat(digits = 2),
+          html = TRUE,
+          na = "NA",
+          rowHeader = TRUE
+        ),
+        heat_units_55F = reactable::colDef(
+          name = 
+            htmltools::HTML(
+              paste0(
+                "HU<br>", 
+                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(DD °F)")
+              )
+            ),
+          format = reactable::colFormat(digits = 1),
+          html = TRUE,
+          na = "NA",
+          rowHeader = TRUE
+        ),
+        heat_units_55F_acc = reactable::colDef(
+          name = 
+            htmltools::HTML(
+              paste0(
+                "HU<sub>cumulative</sub><br>",
+                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(DD °F)")
+              )
+            ),
+          format = reactable::colFormat(digits = 1),
           html = TRUE,
           na = "NA",
           rowHeader = TRUE

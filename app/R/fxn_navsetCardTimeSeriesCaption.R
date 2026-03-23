@@ -4,11 +4,10 @@
 #' @param inData - Data table [[1]] from `fxn_totalEvapotranspiration.R`
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param etEquation - ET equation selection by user
 #' @return `navsetCardTimeSeriesCaption` Caption for time series graph based on user input
 
 
-fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, endDate, etEquation) {
+fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, endDate) {
   
   azmetStationStartDate <- 
     dplyr::filter(
@@ -21,12 +20,12 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
   if (length(unique(inData$date_year_label)) == 1) {
     standardText <- 
       paste0(
-        "Cumulative evapotranspiration (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+        "Cumulative evapotranspiration (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", "etEquation", " equation. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   } else {
     standardText <- 
       paste0(
-        "Cumulative evapotranspiration for the current year (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", etEquation, " equation. Totals for past years (gray lines in graph) are based on the same start and end month and day, but during those respective years. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+        "Cumulative evapotranspiration for the current year (black line in graph) is based on the sum of daily totals during the period of interest and as estimated by the ", "etEquation", " equation. Totals for past years (gray lines in graph) are based on the same start and end month and day, but during those respective years. Evapotranspiration data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   }
   

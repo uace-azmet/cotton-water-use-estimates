@@ -1,13 +1,12 @@
-#' `fxn_totalEvapotranspiration` - Calculates ET accumulation by day and season for period of interest and individual years
+#' `fxn_waterUse` - Estimates cotton water use by day and season for period of interest and individual years
 #' 
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param etEquation - Evapotranspiration equation selection by user
-#' @return `totalEvapotranspiration` - List of daily [[1]] and seasonal [[2]] data tables of values for individual years
+#' @return `waterUse` - List of daily [[1]] and seasonal [[2]] data tables of values for individual years
 
 
-fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEquation) {
+fxn_waterUse <- function(azmetStation, startDate, endDate) {
   azmetStationStartDate <- 
     dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation) %>% 
     dplyr::pull(start_date)
@@ -33,22 +32,18 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
           true = as.character(lubridate::year(startDate)),
           false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
         ),
-        day_of_period = dplyr::row_number(),
-        eto_azmet_acc = round(cumsum(eto_azmet), digits = 2),
-        eto_azmet_in_acc = round(cumsum(eto_azmet_in), digits = 2),
-        eto_pen_mon_acc = round(cumsum(eto_pen_mon), digits = 2),
+        day_of_period = dplyr::row_number() - 1,
         eto_pen_mon_in_acc = round(cumsum(eto_pen_mon_in), digits = 2),
-        precip_total_mm_acc = round(cumsum(precip_total_mm), digits = 2),
+        heat_units_55F_acc = round(cumsum(heat_units_55F), digits = 1),
         precip_total_in_acc = round(cumsum(precip_total_in), digits = 2)
       )
     
     singleYearTotal <-
-      fxn_etTotal(
+      fxn_waterUseTotal(
         inData = singleYearDaily,
         azmetStation = azmetStation,
         startDate = startDate,
-        endDate = endDate,
-        etEquation = etEquation
+        endDate = endDate
       )
     
     # Account for multi-month absence of YUG data in 2021
@@ -64,16 +59,12 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
       if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = userDateRange) == TRUE) {
         singleYearDaily <- singleYearDaily %>% 
           dplyr::mutate(
-            eto_azmet_acc = NA_real_,
-            eto_azmet_in_acc = NA_real_,
-            eto_pen_mon_acc = NA_real_,
             eto_pen_mon_in_acc = NA_real_,
-            precip_total_mm_acc = NA_real_,
             precip_total_in_acc = NA_real_
           )
         
-        singleYearTotal$etTotal <- NA_real_
-        singleYearTotal$etTotalLabel <- "NA"
+        singleYearTotal$waterUseTotal <- NA_real_
+        singleYearTotal$waterUseTotalLabel <- "NA"
       }
     }
 

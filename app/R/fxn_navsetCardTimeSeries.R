@@ -3,7 +3,6 @@
 #' @param inData - Data table [[1]] from `fxn_totalEvapotranspiration.R`
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param etEquation - Evapotranspiration equation selection by user
 
 #' @return `navsetCardTimeSeries` - Time series graph with daily data based on user input
 
@@ -14,23 +13,15 @@
 # https://www.color-hex.com/color-palette/1041718
 
 
-fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
+fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
   
   # Inputs --
   
-  if (etEquation == "Original AZMet") {
-    inData <- inData %>% 
-      dplyr::rename(
-        et_total_in = eto_azmet_in,
-        et_total_in_acc = eto_azmet_in_acc
-      )
-  } else if (etEquation == "Penman-Monteith") {
-    inData <- inData %>%
-      dplyr::rename(
-        et_total_in = eto_pen_mon_in,
-        et_total_in_acc = eto_pen_mon_in_acc
-      )
-  }
+  inData <- inData %>%
+    dplyr::rename(
+      et_total_in = eto_pen_mon_in,
+      et_total_in_acc = eto_pen_mon_in_acc
+    )
   
   inData <- inData |>
     dplyr::mutate(datetime = lubridate::ymd(datetime))
