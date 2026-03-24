@@ -39,8 +39,8 @@ fxn_waterUseTotal <- function(inData, azmetStation, startDate, endDate) {
   } else {
     waterUseTotal <- inData %>%
       # dplyr::group_by(meta_station_name) %>%
-      dplyr::summarize(eto_pen_mon_in_total = sum(eto_pen_mon_in, na.rm = TRUE)) %>%
-      dplyr::rename(waterUseTotal = eto_pen_mon_in_total) %>%
+      dplyr::summarize(water_use_in_total = sum(water_use_in, na.rm = TRUE)) %>%
+      dplyr::rename(waterUseTotal = water_use_in_total) %>%
       dplyr::mutate(waterUseTotalLabel = format(round(waterUseTotal, digits = 2), nsmall = 2)) %>%
       dplyr::mutate(endDateYear = lubridate::year(endDate)) %>%
       dplyr::mutate(dateYearLabel = dateYearLabel)

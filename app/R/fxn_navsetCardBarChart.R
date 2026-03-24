@@ -301,7 +301,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "<b>ET<sub>cumulative</sub> (in)</b>"
+            text = "<b>WU<sub>cumulative</sub> (in)</b>"
           ),
           zeroline = TRUE,
           zerolinecolor = "#c9c9c9"

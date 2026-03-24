@@ -17,12 +17,6 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
   
   # Inputs --
   
-  inData <- inData %>%
-    dplyr::rename(
-      et_total_in = eto_pen_mon_in,
-      et_total_in_acc = eto_pen_mon_in_acc
-    )
-  
   inData <- inData |>
     dplyr::mutate(datetime = lubridate::ymd(datetime))
   
@@ -42,7 +36,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
     plotly::plot_ly( # Lines and points for `dataPreviousYears`
       data = dataPreviousYears,
       x = ~day_of_period,
-      y = ~et_total_in_acc,
+      y = ~water_use_in_acc,
       type = "scatter",
       mode = "lines+markers",
       #color = "rgba(201, 201, 201, 1.0)",
@@ -59,7 +53,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
         "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
+        "<br><b>ET<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
       legendgroup = "dataPreviousYears",
@@ -70,7 +64,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       inherit = FALSE,
       data = dataCurrentYear,
       x = ~day_of_period,
-      y = ~et_total_in_acc,
+      y = ~water_use_in_acc,
       type = "scatter",
       mode = "lines+markers",
       #color = "#191919",
@@ -87,7 +81,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
         "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
+        "<br><b>ET<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
       legendgroup = "dataCurrentYear",
@@ -161,7 +155,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
         title = list(
           font = list(size = 14),
           standoff = 25,
-          text = "<b>ET<sub>cumulative</sub> (in)</b>"
+          text = "<b>WU<sub>cumulative</sub> (in)</b>"
         ),
         zeroline = FALSE
       )
