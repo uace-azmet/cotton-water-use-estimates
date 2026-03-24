@@ -12,6 +12,7 @@ library(plotly)
 library(reactable)
 library(shiny)
 library(shinyjs)
+library(tidyr)
 library(vroom)
 
 

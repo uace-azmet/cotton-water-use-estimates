@@ -32,10 +32,57 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
           true = as.character(lubridate::year(startDate)),
           false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
         ),
-        day_of_period = dplyr::row_number() - 1,
-        eto_pen_mon_in_acc = round(cumsum(eto_pen_mon_in), digits = 2),
-        heat_units_55F_acc = round(cumsum(heat_units_55F), digits = 1),
-        precip_total_in_acc = round(cumsum(precip_total_in), digits = 2)
+        day_of_period = dplyr::row_number(),
+        eto_pen_mon_in_acc = dplyr::if_else(
+          condition = day_of_period == 1,
+          true = NA_real_,
+          false = round((cumsum(eto_pen_mon_in) - eto_pen_mon_in[1]), digits = 2)
+        ),
+        heat_units_55F_acc = dplyr::if_else(
+          condition = day_of_period == 1,
+          true = NA_real_,
+          false = round((cumsum(heat_units_55F) - heat_units_55F[1]), digits = 1)
+        ),
+        precip_total_in_acc = dplyr::if_else(
+          condition = day_of_period == 1,
+          true = NA_real_,
+          false = round((cumsum(precip_total_in) - precip_total_in[1]), digits = 2)
+        ),
+        kc = dplyr::if_else(
+          condition = day_of_period == 1,
+          true = NA_real_,
+          false = dplyr::if_else(
+            condition = heat_units_55F_acc >= 3000,
+            true = 2.3 - (0.0004 * heat_units_55F_acc),
+            false = dplyr::if_else(
+              condition = heat_units_55F_acc >= 2000,
+              true = 1.1,
+              false = dplyr::if_else(
+                condition = heat_units_55F_acc >= 600,
+                true = (0.000743 * heat_units_55F_acc) - 0.33,
+                false = dplyr::if_else(
+                  condition = heat_units_55F_acc >= 1,
+                  true = 0.1,
+                  false = 0
+                )
+              )
+            )
+          )
+        ),
+        water_use_in = dplyr::if_else(
+          condition = day_of_period == 1,
+          true = NA_real_,
+          false = dplyr::if_else(
+            condition = kc > 0,
+            true = kc * eto_pen_mon_in,
+            false = 0
+          )
+        ),
+        water_use_in_acc = dplyr::if_else(
+          condition = day_of_period == 1,
+          true = NA_real_,
+          false = round(cumsum(tidyr::replace_na(water_use_in, 0)), digits = 2)
+        )
       )
     
     singleYearTotal <-

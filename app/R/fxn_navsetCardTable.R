@@ -24,6 +24,9 @@ fxn_navsetCardTable <- function(inData, startDate, endDate) {
           "eto_pen_mon_in_acc",
           "heat_units_55F",
           "heat_units_55F_acc",
+          "kc",
+          "water_use_in",
+          "water_use_in_acc",
           "precip_total_in", 
           "precip_total_in_acc"
         )
@@ -144,6 +147,40 @@ fxn_navsetCardTable <- function(inData, startDate, endDate) {
               )
             ),
           format = reactable::colFormat(digits = 1),
+          html = TRUE,
+          na = "NA",
+          rowHeader = TRUE
+        ),
+        kc = reactable::colDef(
+          name = htmltools::HTML("K<sub>c</sub><br>"),
+          format = reactable::colFormat(digits = 3),
+          html = TRUE,
+          # minWidth = 100,
+          na = "NA",
+          rowHeader = TRUE
+        ),
+        water_use_in = reactable::colDef(
+          name = 
+            htmltools::HTML(
+              paste0(
+                "WU<br>", 
+                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
+              )
+            ),
+          format = reactable::colFormat(digits = 2),
+          html = TRUE,
+          na = "NA",
+          rowHeader = TRUE
+        ),
+        water_use_in_acc = reactable::colDef(
+          name = 
+            htmltools::HTML(
+              paste0(
+                "WU<sub>cumulative</sub><br>",
+                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
+              )
+            ),
+          format = reactable::colFormat(digits = 2),
           html = TRUE,
           na = "NA",
           rowHeader = TRUE
