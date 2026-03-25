@@ -74,7 +74,7 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
           true = NA_real_,
           false = dplyr::if_else(
             condition = kc > 0,
-            true = kc * eto_pen_mon_in,
+            true = round(kc * eto_pen_mon_in, digits = 2),
             false = 0
           )
         ),

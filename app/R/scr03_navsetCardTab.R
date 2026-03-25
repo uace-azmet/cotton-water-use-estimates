@@ -21,7 +21,7 @@ navsetCardTab <- bslib::navset_card_tab(
     title = "Table",
     value = "table",
     
-    reactable::reactableOutput(outputId = "navsetCardTable"),
+    reactable::reactableOutput(outputId = "navsetCardTable", height = "100%"),
     shiny::htmlOutput(outputId = "navsetCardTableCaption")
   ),
   
