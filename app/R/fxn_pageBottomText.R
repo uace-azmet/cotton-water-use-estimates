@@ -5,7 +5,8 @@
 
 fxn_pageBottomText <- function() {
   
-  # Define inputs -----
+  
+  # Define inputs --
   
   apiURL <- a(
     "api.azmet.arizona.edu", 
@@ -16,6 +17,12 @@ fxn_pageBottomText <- function() {
   azmetrURL <- a(
     "azmetr", 
     href="https://uace-azmet.github.io/azmetr/",
+    target="_blank"
+  )
+  
+  bulletinURL <- a(
+    "AZ1324 'Standardized Reference Evapotranspiration'",
+    href="https://extension.arizona.edu/sites/extension.arizona.edu/files/pubs/az1324.pdf",
     target="_blank"
   )
   
@@ -53,12 +60,15 @@ fxn_pageBottomText <- function() {
     target="_blank"
   )
   
-  # Build text -----
+  
+  # Build text --
   
   pageBottomText <- 
     htmltools::p(
       htmltools::HTML(
         paste0(
+          "Daily estimates of cotton water use are calculated from the formula <em>K<sub>c</sub> * ET<sub>o</sub></em>, where <em>K<sub>c</sub></em> is a crop coefficient whose value is a function of cumulative daily heat units<sub>86-55 °F</sub> since the planting date, and <em>ET<sub>o</sub></em> is daily total evapotranspiration based on the Penman-Monteith equation. Evapotranspiration totals based on the Penman-Monteith equation assume a location of extensive, well-watered grass or other dense, uniform vegetation. Non-standard surfaces at some stations may relatively raise temperature and lower humidity, and potentially result in an overestimation of evapotranspiration. More information about this equation is in Extension bulletin ", bulletinURL, ".",
+          htmltools::br(), htmltools::br(),
           "AZMet daily data are from ", apiURL, " and accessed using the ", azmetrURL, " R package. Values from recent dates may be based on provisional data. More information about ", webpageDataVariables, ", ", webpageNetworkMap, ", and ", webpageStationMetadata, " is available on the ", webpageAZMet, ". Users of AZMet data and related information assume all risks of its use.",
           htmltools::br(), htmltools::br(),
           "To cite the above AZMet data, please use: 'Arizona Meteorological Network (", todayYear, ") Arizona Meteorological Network (AZMet) Data. https:://azmet.arizona.edu. Accessed ", todayDate, "', along with 'Arizona Meteorological Network (", todayYear, ") Cotton Water Use. https://viz.datascience.arizona.edu/azmet/cotton-water-use. Accessed ", todayDate, "'.",
