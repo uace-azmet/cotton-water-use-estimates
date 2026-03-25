@@ -81,7 +81,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         scrollZoom = FALSE,
         toImageButtonOptions = list(
           format = "png", # Either png, svg, jpeg, or webp
-          filename = "AZMet-total-evapotranspiration-calculator",
+          filename = "AZMet-cotton-water-use-estimates",
           height = 400,
           width = 700,
           scale = 5
@@ -164,7 +164,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "<b>ET<sub>cumulative</sub> (in)</b>"
+            text = "<b>WU<sub>cumulative</sub> (in)</b>"
           ),
           zeroline = TRUE,
           zerolinecolor = "#c9c9c9"
@@ -218,7 +218,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         scrollZoom = FALSE,
         toImageButtonOptions = list(
           format = "png", # Either png, svg, jpeg, or webp
-          filename = "AZMet-total-evapotranspiration-calculator",
+          filename = "AZMet-cotton-water-use-estimates",
           height = 400,
           width = 700,
           scale = 5

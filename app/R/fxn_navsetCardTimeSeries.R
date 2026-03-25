@@ -1,6 +1,6 @@
 #' `fxn_navsetCardTimeSeries.R` Generate time series graph with daily data based on user input
 #' 
-#' @param inData - Data table [[1]] from `fxn_totalEvapotranspiration.R`
+#' @param inData - Data table [[1]] from `fxn_waterUse.R`
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
 
@@ -53,7 +53,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
         "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>ET<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
+        "<br><b>WU<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
       legendgroup = "dataPreviousYears",
@@ -81,7 +81,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
         "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>ET<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
+        "<br><b>WU<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
       legendgroup = "dataCurrentYear",
@@ -101,7 +101,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       scrollZoom = FALSE,
       toImageButtonOptions = list(
         format = "png", # Either png, svg, jpeg, or webp
-        filename = "AZMet-Total-Evapotranspiration-Calculator",
+        filename = "AZMet-cotton-water-use-estimates",
         height = 400,
         width = 700,
         scale = 5
