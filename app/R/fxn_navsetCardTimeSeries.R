@@ -147,7 +147,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
         title = list(
           font = list(size = 14),
           standoff = 25,
-          text = "<b>Day<sub>period</sub></b>"
+          text = "<b>Day<sub>season</sub></b>"
         ),
         zeroline = FALSE
       ),

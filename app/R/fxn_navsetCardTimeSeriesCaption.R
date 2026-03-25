@@ -30,7 +30,7 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
   }
   
   variableKeyText <- 
-    "Variable key: <strong>WU<sub>cumulative</sub> (in)</strong> accumulation of daily water use estimates in inches"
+    "Variable key: <strong>Day<sub>season</sub></strong> day number of the growing season defined by the period of interest and since the planting date; <strong>WU<sub>cumulative</sub> (in)</strong> accumulation of daily water use estimates in inches"
   
   # Account for multi-month absence of YUG data in 2021
   nonOperational <- 0

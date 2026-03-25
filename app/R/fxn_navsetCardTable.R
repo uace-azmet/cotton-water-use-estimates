@@ -93,7 +93,7 @@ fxn_navsetCardTable <- function(inData, startDate, endDate) {
           rowHeader = TRUE
         ),
         day_of_period = reactable::colDef(
-          name = htmltools::HTML("Day<sub>period</sub><br>"),
+          name = htmltools::HTML("Day<sub>season</sub><br>"),
           html = TRUE,
           # minWidth = 100,
           na = "NA",

@@ -8,7 +8,7 @@ fxn_navsetCardTableCaption <- function() {
     htmltools::p(
       htmltools::HTML(
         paste0(
-          "Variable key: <strong>Day<sub>period</sub></strong> day number of the period of interest; <strong>ET</strong> daily total evapotranspiration in inches as estimated by the ", "etEquation", " equation; <strong>ET<sub>cumulative</sub></strong> accumulation of daily total evapotranspiration in inches during the period of interest as estimated by the ", "etEquation", " equation; <strong>P</strong> daily total precipitation in inches; <strong>P<sub>cumulative</sub></strong> accumulation of daily total precipitation in inches during the period of interest"
+          "Variable key: <strong>Day<sub>season</sub></strong> day number of the growing season defined by the period of interest and since the planting date; <strong>ET</strong> daily total evapotranspiration in inches as estimated by the ", "etEquation", " equation; <strong>ET<sub>cumulative</sub></strong> accumulation of daily total evapotranspiration in inches during the period of interest as estimated by the ", "etEquation", " equation; <strong>P</strong> daily total precipitation in inches; <strong>P<sub>cumulative</sub></strong> accumulation of daily total precipitation in inches during the period of interest"
         )
       ),
       
