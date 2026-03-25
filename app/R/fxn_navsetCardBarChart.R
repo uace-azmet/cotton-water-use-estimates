@@ -46,7 +46,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
           "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", waterUseTotalLabel, " inches"
+          "<br><b>WU<sub>cumulative</sub>:</b> ", waterUseTotalLabel, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -63,7 +63,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
           "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", waterUseTotalLabel, " inches"
+          "<br><b>WU<sub>cumulative</sub>:</b> ", waterUseTotalLabel, " inches"
         ),
         type = "bar"
       ) %>%
@@ -183,7 +183,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
           "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", waterUseTotalLabel, " inches"
+          "<br><b>WU<sub>cumulative</sub>:</b> ", waterUseTotalLabel, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -200,7 +200,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
           "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", waterUseTotalLabel, " inches"
+          "<br><b>WU<sub>cumulative</sub>:</b> ", waterUseTotalLabel, " inches"
         ),
         type = "bar"
       ) %>%
