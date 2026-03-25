@@ -1,10 +1,10 @@
-#' `fxn_navsetCardTabSummary.R` - Build summary of total evapotranspiration value based on user input
+#' `fxn_navsetCardTabSummary.R` - Build summary of estimated cotton water use value based on user input
 #' 
 #' @param azmetStation - AZMet station selection by user
-#' @param inData - data table of seasonal total evapotranspiration by year
+#' @param inData - data table of seasonal estimated cotton water use by year
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @return `navsetCardTabSummary` - Summary of total evapotranspiration value based on user input
+#' @return `navsetCardTabSummary` - Summary of estimated cotton water use value based on user input
 
 
 fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
@@ -19,7 +19,7 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
       htmltools::p(
         htmltools::HTML(
           paste0(
-            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>."
+            "Estimated cotton water use at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>."
           ),
         ),
         
@@ -66,7 +66,7 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
       htmltools::p(
         htmltools::HTML(
           paste0(
-            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>. This is ", differencePreviousYearText, " the total during this same month-day period in ", previousYearText, ", and ", differenceAverageText, " the station average."
+            "Estimated cotton water use at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>. This is ", differencePreviousYearText, " the total during this same month-day period in ", previousYearText, ", and ", differenceAverageText, " the station average."
           ),
         ),
         

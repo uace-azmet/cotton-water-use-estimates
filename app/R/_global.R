@@ -119,7 +119,7 @@ dailyVarsDerived <-
 # Identification and date variables
 dailyVarsID <- 
   c(
-    "date_doy", 
+    # "date_doy", 
     "date_year", 
     "datetime", 
     # "meta_needs_review", 

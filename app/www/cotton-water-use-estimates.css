@@ -132,17 +132,70 @@
   background-color: rgb(226, 233, 235) !important;
 }
 
-.decade.active.disabled.focused {
+.decade:hover {
+  background-color: rgb(226, 233, 235) !important;
+}
+
+.decade.active {
   background-color: rgb(226, 233, 235) !important;
   border-color: none !important;
   color: var(--bs-body-color) !important;
   text-shadow: none !important;
 }
 
-.decade.active.disabled.focused:hover {
+.decade.active:hover {
   background-color: rgb(226, 233, 235) !important;
   border-color: none !important;
   color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.disabled {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.disabled:hover {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused.active {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused.active:hover {
+  background-color: rgb(226, 233, 235) !important;
+  border-color: none !important;
+  color: var(--bs-body-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused.disabled {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.decade.focused.disabled:hover {
+  background-color: #FFFFFF !important;
+    border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
   text-shadow: none !important;
 }
 
