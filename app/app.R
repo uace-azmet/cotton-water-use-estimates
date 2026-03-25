@@ -3,7 +3,6 @@
 # Add code for the following
 # 
 # 'azmet-shiny-template.html': <!-- Google tag (gtag.js) -->
-# 'azmet-shiny-template.html': <!-- CSS specific to this AZMet Shiny app -->
 
 
 # UI --------------------
@@ -45,7 +44,7 @@ server <- function(input, output, session) {
   
   # Observables -----
   
-  shiny::observeEvent(totalEvapotranspiration(), {
+  shiny::observeEvent(waterUse(), {
     shinyjs::showElement(id = "downloadButtonsDiv")
     shinyjs::showElement(id = "navsetCardTab")
     showNavsetCardTab(TRUE)
@@ -58,13 +57,6 @@ server <- function(input, output, session) {
       dplyr::filter(azmetStationMetadata, meta_station_name == input$azmetStation) %>% 
       dplyr::pull(start_date)
     
-    # if (stationStartDate > initialStartDate) {
-    #   stationStartDateMinimum <- stationStartDate
-    #   stationEndDateMinimum <- stationStartDate
-    # } else {
-    #   stationStartDateMinimum <- Sys.Date() - lubridate::years(1)
-    #   stationEndDateMinimum <- Sys.Date() - lubridate::years(1)
-    # }
     stationStartDateMinimum <- stationStartDate
     stationEndDateMinimum <- stationStartDate
     
@@ -120,48 +112,44 @@ server <- function(input, output, session) {
   
   # Reactives -----
   
-  navsetCardBarChart <- shiny::eventReactive(totalEvapotranspiration(), {
+  navsetCardBarChart <- shiny::eventReactive(waterUse(), {
     fxn_navsetCardBarChart(
-      inData = totalEvapotranspiration()[[2]],
+      inData = waterUse()[[2]],
       azmetStation = input$azmetStation
     )
   })
   
-  navsetCardBarChartCaption <- shiny::eventReactive(totalEvapotranspiration(), {
+  navsetCardBarChartCaption <- shiny::eventReactive(waterUse(), {
     fxn_navsetCardBarChartCaption(
       azmetStation = input$azmetStation,
-      inData = totalEvapotranspiration()[[2]],
-      startDate = input$startDate,
-      endDate = input$endDate,
-      etEquation = input$etEquation
-    )
-  })
-  
-  navsetCardTable <- shiny::eventReactive(totalEvapotranspiration(), {
-    fxn_navsetCardTable(
-      inData = totalEvapotranspiration()[[1]],
-      startDate = input$startDate,
-      endDate = input$endDate,
-      etEquation = input$etEquation
-    )
-  })
-  
-  navsetCardTableCaption <- shiny::eventReactive(totalEvapotranspiration(), {
-    fxn_navsetCardTableCaption(
-      etEquation = input$etEquation
-    )
-  })
-  
-  navsetCardTabSummary <- shiny::eventReactive(totalEvapotranspiration(), {
-    fxn_navsetCardTabSummary(
-      azmetStation = input$azmetStation,
-      inData = totalEvapotranspiration()[[2]],
+      inData = waterUse()[[2]],
       startDate = input$startDate,
       endDate = input$endDate
     )
   })
   
-  navsetCardTabTitle <- shiny::eventReactive(list(navsetCardTabTitleIcon(), totalEvapotranspiration()), {
+  navsetCardTable <- shiny::eventReactive(waterUse(), {
+    fxn_navsetCardTable(
+      inData = waterUse()[[1]],
+      startDate = input$startDate,
+      endDate = input$endDate
+    )
+  })
+  
+  navsetCardTableCaption <- shiny::eventReactive(waterUse(), {
+    fxn_navsetCardTableCaption()
+  })
+  
+  navsetCardTabSummary <- shiny::eventReactive(waterUse(), {
+    fxn_navsetCardTabSummary(
+      azmetStation = input$azmetStation,
+      inData = waterUse()[[2]],
+      startDate = input$startDate,
+      endDate = input$endDate
+    )
+  })
+  
+  navsetCardTabTitle <- shiny::eventReactive(list(navsetCardTabTitleIcon(), waterUse()), {
     fxn_navsetCardTabTitle(
       azmetStation = input$azmetStation,
       navsetCardTabTitleIcon = navsetCardTabTitleIcon()
@@ -174,26 +162,24 @@ server <- function(input, output, session) {
     )
   })
   
-  navsetCardTimeSeries <- shiny::eventReactive(totalEvapotranspiration(), {
+  navsetCardTimeSeries <- shiny::eventReactive(waterUse(), {
     fxn_navsetCardTimeSeries(
-      inData = totalEvapotranspiration()[[1]],
+      inData = waterUse()[[1]],
       startDate = input$startDate,
-      endDate = input$endDate,
-      etEquation = input$etEquation
+      endDate = input$endDate
     )
   })
   
-  navsetCardTimeSeriesCaption <- shiny::eventReactive(totalEvapotranspiration(), {
+  navsetCardTimeSeriesCaption <- shiny::eventReactive(waterUse(), {
     fxn_navsetCardTimeSeriesCaption(
       azmetStation = input$azmetStation,
-      inData = totalEvapotranspiration()[[1]],
+      inData = waterUse()[[1]],
       startDate = input$startDate,
-      endDate = input$endDate,
-      etEquation = input$etEquation
+      endDate = input$endDate
     )
   })
   
-  pageBottomText <- shiny::eventReactive(totalEvapotranspiration(), {
+  pageBottomText <- shiny::eventReactive(waterUse(), {
     fxn_pageBottomText(
       # startDate = input$startDate, 
       # endDate = input$endDate,
@@ -201,7 +187,7 @@ server <- function(input, output, session) {
     )
   })
   
-  totalEvapotranspiration <- shiny::eventReactive(input$estimateWaterUse, {
+  waterUse <- shiny::eventReactive(input$estimateWaterUse, {
     shiny::validate(
       shiny::need(
         expr = input$startDate <= input$endDate,
@@ -223,11 +209,10 @@ server <- function(input, output, session) {
       add = TRUE
     )
     
-    fxn_totalEvapotranspiration( # calls `fxn_azDaily.R`, `fxn_etTotal.R`
+    fxn_waterUse( # calls `fxn_azDaily.R`, `fxn_waterUseSeasonalTotal.R`
       azmetStation = input$azmetStation,
       startDate = input$startDate,
-      endDate = input$endDate,
-      etEquation = input$etEquation
+      endDate = input$endDate
     )
   })
   
@@ -241,14 +226,14 @@ server <- function(input, output, session) {
   output$downloadCSV <- shiny::downloadHandler(
     filename = function() {"AZMet-cotton-water-use-estimates.csv"},
     content = function(file) {
-      vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = ",")
+      vroom::vroom_write(x = waterUse()[[1]], file = file, delim = ",")
     }
   )
   
   output$downloadTSV <- shiny::downloadHandler(
     filename = function() {"AZMet-cotton-water-use-estimates.tsv"},
     content = function(file) {
-      vroom::vroom_write(x = totalEvapotranspiration()[[1]], file = file, delim = "\t")
+      vroom::vroom_write(x = waterUse()[[1]], file = file, delim = "\t")
     }
   )
   
@@ -260,6 +245,7 @@ server <- function(input, output, session) {
     navsetCardBarChartCaption()
   })
   
+  # Having `navsetCardTab` as `output` helps with hiding the tabs on app start up
   output$navsetCardTab <- shiny::renderUI({
     shiny::req(showNavsetCardTab())
     navsetCardTab # `scr##_navsetCardTab.R`

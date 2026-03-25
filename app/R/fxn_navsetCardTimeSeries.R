@@ -1,9 +1,8 @@
 #' `fxn_navsetCardTimeSeries.R` Generate time series graph with daily data based on user input
 #' 
-#' @param inData - Data table [[1]] from `fxn_totalEvapotranspiration.R`
+#' @param inData - Data table [[1]] from `fxn_waterUse.R`
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param etEquation - Evapotranspiration equation selection by user
 
 #' @return `navsetCardTimeSeries` - Time series graph with daily data based on user input
 
@@ -14,23 +13,9 @@
 # https://www.color-hex.com/color-palette/1041718
 
 
-fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
+fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
   
   # Inputs --
-  
-  if (etEquation == "Original AZMet") {
-    inData <- inData %>% 
-      dplyr::rename(
-        et_total_in = eto_azmet_in,
-        et_total_in_acc = eto_azmet_in_acc
-      )
-  } else if (etEquation == "Penman-Monteith") {
-    inData <- inData %>%
-      dplyr::rename(
-        et_total_in = eto_pen_mon_in,
-        et_total_in_acc = eto_pen_mon_in_acc
-      )
-  }
   
   inData <- inData |>
     dplyr::mutate(datetime = lubridate::ymd(datetime))
@@ -50,8 +35,8 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
   navsetCardTimeSeries <- 
     plotly::plot_ly( # Lines and points for `dataPreviousYears`
       data = dataPreviousYears,
-      x = ~day_of_period,
-      y = ~et_total_in_acc,
+      x = ~day_of_season,
+      y = ~water_use_in_acc,
       type = "scatter",
       mode = "lines+markers",
       #color = "rgba(201, 201, 201, 1.0)",
@@ -68,7 +53,8 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
         "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
+        "<br><b>Day<sub>season</sub>:</b> ", format(day_of_season, nsmall = 0),
+        "<br><b>WU<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
       legendgroup = "dataPreviousYears",
@@ -78,8 +64,8 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
     plotly::add_trace( # Lines and points for `dataCurrentYear`
       inherit = FALSE,
       data = dataCurrentYear,
-      x = ~day_of_period,
-      y = ~et_total_in_acc,
+      x = ~day_of_season,
+      y = ~water_use_in_acc,
       type = "scatter",
       mode = "lines+markers",
       #color = "#191919",
@@ -96,7 +82,8 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
         "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>ET<sub>cumulative</sub>:</b> ", format(et_total_in_acc, nsmall = 2), " inches"
+        "<br><b>Day<sub>season</sub>:</b> ", format(day_of_season, nsmall = 0),
+        "<br><b>WU<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
       legendgroup = "dataCurrentYear",
@@ -116,7 +103,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
       scrollZoom = FALSE,
       toImageButtonOptions = list(
         format = "png", # Either png, svg, jpeg, or webp
-        filename = "AZMet-Total-Evapotranspiration-Calculator",
+        filename = "AZMet-cotton-water-use-estimates",
         height = 400,
         width = 700,
         scale = 5
@@ -158,11 +145,11 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
         orientation = "v"
       ),
       xaxis = list(
-        range = list(~(min(day_of_period) - 0.5), ~(max(day_of_period) + 1.5)),
+        range = list(~(min(day_of_season) - 0.5), ~(max(day_of_season) + 1.5)),
         title = list(
           font = list(size = 14),
           standoff = 25,
-          text = "<b>Day<sub>period</sub></b>"
+          text = "<b>Day<sub>season</sub></b>"
         ),
         zeroline = FALSE
       ),
@@ -170,7 +157,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate, etEquation) {
         title = list(
           font = list(size = 14),
           standoff = 25,
-          text = "<b>ET<sub>cumulative</sub> (in)</b>"
+          text = "<b>WU<sub>cumulative</sub> (in)</b>"
         ),
         zeroline = FALSE
       )

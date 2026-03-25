@@ -12,6 +12,7 @@ library(plotly)
 library(reactable)
 library(shiny)
 library(shinyjs)
+library(tidyr)
 library(vroom)
 
 
@@ -56,8 +57,6 @@ activeStations <-
     status == "active"
   )
 
-etEquations <- c("Original AZMet", "Penman-Monteith") # REMOVE BEFORE DEPLOYMENT !!!
-
 initialStation <-
   dplyr::filter(
     activeStations,
@@ -84,16 +83,16 @@ dailyVarsDerived <-
     # "chill_hours_7C", 
     # "dwpt_mean", 
     # "dwpt_meanF", 
-    "eto_azmet",
-    "eto_azmet_in", 
-    "eto_pen_mon", 
+    # "eto_azmet",
+    # "eto_azmet_in", 
+    # "eto_pen_mon", 
     "eto_pen_mon_in", 
     # "heat_units_10C", 
     # "heat_units_13C", 
     # "heat_units_3413C", 
     # "heat_units_45F", 
     # "heat_units_50F", 
-    # "heat_units_55F", 
+    "heat_units_55F", 
     # "heat_units_7C", 
     # "heat_units_9455F", 
     # "heatstress_cotton_meanC", 
@@ -120,7 +119,7 @@ dailyVarsDerived <-
 # Identification and date variables
 dailyVarsID <- 
   c(
-    "date_doy", 
+    # "date_doy", 
     "date_year", 
     "datetime", 
     # "meta_needs_review", 
@@ -135,7 +134,7 @@ dailyVarsMeasured <-
     # "meta_bat_volt_max", 
     # "meta_bat_volt_mean", 
     # "meta_bat_volt_min", 
-    "precip_total_mm"#, 
+    # "precip_total_mm"#, 
     # "relative_humidity_max", 
     # "relative_humidity_mean", 
     # "relative_humidity_min", 

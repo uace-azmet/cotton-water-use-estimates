@@ -32,13 +32,6 @@ sidebar <- bslib::sidebar(
     selected = azmetStationMetadata[order(azmetStationMetadata$meta_station_name), ]$meta_station_name[1]
   ),
   
-  shiny::selectInput(
-    inputId = "etEquation",
-    label = "Equation",
-    choices = etEquations,
-    selected = "Penman-Monteith"
-  ),
-  
   shiny::dateInput(
     inputId = "startDate",
     label = "Planting Date",

@@ -1,13 +1,12 @@
-#' `fxn_totalEvapotranspiration` - Calculates ET accumulation by day and season for period of interest and individual years
+#' `fxn_waterUse` - Estimates cotton water use by day and season for period of interest and individual years
 #' 
 #' @param azmetStation - AZMet station selection by user
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @param etEquation - Evapotranspiration equation selection by user
-#' @return `totalEvapotranspiration` - List of daily [[1]] and seasonal [[2]] data tables of values for individual years
+#' @return `waterUse` - List of daily [[1]] and seasonal [[2]] data tables of values for individual years
 
 
-fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEquation) {
+fxn_waterUse <- function(azmetStation, startDate, endDate) {
   azmetStationStartDate <- 
     dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation) %>% 
     dplyr::pull(start_date)
@@ -33,22 +32,65 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
           true = as.character(lubridate::year(startDate)),
           false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
         ),
-        day_of_period = dplyr::row_number(),
-        eto_azmet_acc = round(cumsum(eto_azmet), digits = 2),
-        eto_azmet_in_acc = round(cumsum(eto_azmet_in), digits = 2),
-        eto_pen_mon_acc = round(cumsum(eto_pen_mon), digits = 2),
-        eto_pen_mon_in_acc = round(cumsum(eto_pen_mon_in), digits = 2),
-        precip_total_mm_acc = round(cumsum(precip_total_mm), digits = 2),
-        precip_total_in_acc = round(cumsum(precip_total_in), digits = 2)
+        day_of_season = dplyr::row_number() - 1,
+        eto_pen_mon_in_acc = dplyr::if_else(
+          condition = day_of_season == 0,
+          true = NA_real_,
+          false = round((cumsum(eto_pen_mon_in) - eto_pen_mon_in[1]), digits = 2)
+        ),
+        heat_units_55F_acc = dplyr::if_else(
+          condition = day_of_season == 0,
+          true = NA_real_,
+          false = round((cumsum(heat_units_55F) - heat_units_55F[1]), digits = 1)
+        ),
+        precip_total_in_acc = dplyr::if_else(
+          condition = day_of_season == 0,
+          true = NA_real_,
+          false = round((cumsum(precip_total_in) - precip_total_in[1]), digits = 2)
+        ),
+        kc = dplyr::if_else(
+          condition = day_of_season == 0,
+          true = NA_real_,
+          false = dplyr::if_else(
+            condition = heat_units_55F_acc >= 3000,
+            true = 2.3 - (0.0004 * heat_units_55F_acc),
+            false = dplyr::if_else(
+              condition = heat_units_55F_acc >= 2000,
+              true = 1.1,
+              false = dplyr::if_else(
+                condition = heat_units_55F_acc >= 600,
+                true = (0.000743 * heat_units_55F_acc) - 0.33,
+                false = dplyr::if_else(
+                  condition = heat_units_55F_acc >= 1,
+                  true = 0.1,
+                  false = 0
+                )
+              )
+            )
+          )
+        ),
+        water_use_in = dplyr::if_else(
+          condition = day_of_season == 0,
+          true = NA_real_,
+          false = dplyr::if_else(
+            condition = kc > 0,
+            true = round(kc * eto_pen_mon_in, digits = 2),
+            false = 0
+          )
+        ),
+        water_use_in_acc = dplyr::if_else(
+          condition = day_of_season == 0,
+          true = NA_real_,
+          false = round(cumsum(tidyr::replace_na(water_use_in, 0)), digits = 2)
+        )
       )
     
     singleYearTotal <-
-      fxn_etTotal(
+      fxn_waterUseSeasonalTotal(
         inData = singleYearDaily,
         azmetStation = azmetStation,
         startDate = startDate,
-        endDate = endDate,
-        etEquation = etEquation
+        endDate = endDate
       )
     
     # Account for multi-month absence of YUG data in 2021
@@ -64,16 +106,12 @@ fxn_totalEvapotranspiration <- function(azmetStation, startDate, endDate, etEqua
       if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = userDateRange) == TRUE) {
         singleYearDaily <- singleYearDaily %>% 
           dplyr::mutate(
-            eto_azmet_acc = NA_real_,
-            eto_azmet_in_acc = NA_real_,
-            eto_pen_mon_acc = NA_real_,
             eto_pen_mon_in_acc = NA_real_,
-            precip_total_mm_acc = NA_real_,
             precip_total_in_acc = NA_real_
           )
         
-        singleYearTotal$etTotal <- NA_real_
-        singleYearTotal$etTotalLabel <- "NA"
+        singleYearTotal$water_use_total <- NA_real_
+        singleYearTotal$water_use_total_label <- "NA"
       }
     }
 

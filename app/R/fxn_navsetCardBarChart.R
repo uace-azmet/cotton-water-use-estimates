@@ -1,8 +1,8 @@
-#' `fxn_navsetCardBarChart` Generates bar chart of total evapotranspiration of current and recent years
+#' `fxn_navsetCardBarChart` Generates bar chart of estimated cotton water use of current and recent years
 #' 
-#' @param inData - Data table [[2]] from `fxn_totalEvapotranspiration.R`
+#' @param inData - Data table [[2]] from `fxn_waterUse.R`
 #' @param azmetStation - User-specified AZMet station
-#' @return `navsetCardBarChart` - plotly bar chart
+#' @return `navsetCardBarChart` - plotly bar chart of estimated cotton water use of current and recent years
 
 # https://plotly-r.com/ 
 # https://plotly.com/r/reference/ 
@@ -15,20 +15,20 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
   
   # Inputs --
   
-  averageTotal <- mean(inData$etTotal, na.rm = TRUE)
+  averageTotal <- mean(inData$water_use_seasonal_total, na.rm = TRUE)
   
   dataCurrentYear <- inData %>% 
-    dplyr::filter(endDateYear == max(endDateYear)) %>%
-    dplyr::mutate(endDateYear = as.factor(endDateYear))
+    dplyr::filter(end_date_year == max(end_date_year)) %>%
+    dplyr::mutate(end_date_year = as.factor(end_date_year))
   
   dataOtherYears <- inData %>% 
-    dplyr::filter(endDateYear != max(endDateYear)) %>% 
-    dplyr::mutate(endDateYear = as.factor(endDateYear))
+    dplyr::filter(end_date_year != max(end_date_year)) %>% 
+    dplyr::mutate(end_date_year = as.factor(end_date_year))
   
   layoutFontFamily <- "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
   
-  ticktext <- inData$dateYearLabel
-  tickvals <- inData$endDateYear
+  ticktext <- inData$date_year_label
+  tickvals <- inData$end_date_year
   
   
   # Figure --
@@ -37,16 +37,16 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
     navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
-        x = ~endDateYear,
-        y = ~etTotal,
+        x = ~end_date_year,
+        y = ~water_use_seasonal_total,
         marker = list(color = "#bfbfbf"),
         name = "other years",
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>Year:</b> ", date_year_label,
+          "<br><b>WU<sub>cumulative</sub>:</b> ", water_use_seasonal_total_label, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -54,16 +54,16 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
       plotly::add_trace( # Bar for `dataCurrentYear`
         inherit = FALSE,
         data = dataCurrentYear,
-        x = ~endDateYear,
-        y = ~etTotal,
+        x = ~end_date_year,
+        y = ~water_use_seasonal_total,
         marker = list(color = "#191919"),
         name = "current year",
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>Year:</b> ", date_year_label,
+          "<br><b>WU<sub>cumulative</sub>:</b> ", water_use_seasonal_total_label, " inches"
         ),
         type = "bar"
       ) %>%
@@ -81,7 +81,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         scrollZoom = FALSE,
         toImageButtonOptions = list(
           format = "png", # Either png, svg, jpeg, or webp
-          filename = "AZMet-total-evapotranspiration-calculator",
+          filename = "AZMet-cotton-water-use-estimates",
           height = 400,
           width = 700,
           scale = 5
@@ -164,7 +164,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "<b>ET<sub>cumulative</sub> (in)</b>"
+            text = "<b>WU<sub>cumulative</sub> (in)</b>"
           ),
           zeroline = TRUE,
           zerolinecolor = "#c9c9c9"
@@ -174,16 +174,16 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
     navsetCardBarChart <- 
       plotly::plot_ly( # Bars for `dataOtherYears`
         data = dataOtherYears,
-        x = ~endDateYear,
-        y = ~etTotal,
+        x = ~end_date_year,
+        y = ~water_use_seasonal_total,
         marker = list(color = "#bfbfbf"),
         name = "other years",
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>Year:</b> ", date_year_label,
+          "<br><b>WU<sub>cumulative</sub>:</b> ", water_use_seasonal_total_label, " inches"
         ),
         type = "bar"
       ) %>% 
@@ -191,16 +191,16 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
       plotly::add_trace( # Bar for `dataCurrentYear`
         inherit = FALSE,
         data = dataCurrentYear,
-        x = ~endDateYear,
-        y = ~etTotal,
+        x = ~end_date_year,
+        y = ~water_use_seasonal_total,
         marker = list(color = "#191919"),
         name = "current year",
         showlegend = FALSE,
         hoverinfo = "text",
         hovertext = ~paste0(
           "<br><b>AZMet Station:</b> ", azmetStation,
-          "<br><b>Year:</b> ", dateYearLabel,
-          "<br><b>Total:</b> ", etTotalLabel, " inches"
+          "<br><b>Year:</b> ", date_year_label,
+          "<br><b>WU<sub>cumulative</sub>:</b> ", water_use_seasonal_total_label, " inches"
         ),
         type = "bar"
       ) %>%
@@ -218,7 +218,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
         scrollZoom = FALSE,
         toImageButtonOptions = list(
           format = "png", # Either png, svg, jpeg, or webp
-          filename = "AZMet-total-evapotranspiration-calculator",
+          filename = "AZMet-cotton-water-use-estimates",
           height = 400,
           width = 700,
           scale = 5
@@ -301,7 +301,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
           title = list(
             font = list(size = 14),
             standoff = 25,
-            text = "<b>ET<sub>cumulative</sub> (in)</b>"
+            text = "<b>WU<sub>cumulative</sub> (in)</b>"
           ),
           zeroline = TRUE,
           zerolinecolor = "#c9c9c9"

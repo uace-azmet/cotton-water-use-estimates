@@ -28,7 +28,7 @@ fxn_navsetCardTabTitle <- function(azmetStation, navsetCardTabTitleIcon) {
           htmltools::HTML("&nbsp;"),
           bslib::tooltip(
             bsicons::bs_icon("info-circle"),
-            "In addition to the following summary, select from the tabs below to view the estimated water use in different contexts.",
+            "In addition to the following summary, select from the tabs below to view the estimated cotton water use in different contexts.",
             id = "infoNavsetCardTabTitle",
             placement = "right"
           )

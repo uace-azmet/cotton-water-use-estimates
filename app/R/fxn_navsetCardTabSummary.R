@@ -1,17 +1,17 @@
-#' `fxn_navsetCardTabSummary.R` - Build summary of total evapotranspiration value based on user input
+#' `fxn_navsetCardTabSummary.R` - Build summary of estimated cotton water use value based on user input
 #' 
 #' @param azmetStation - AZMet station selection by user
-#' @param inData - data table of seasonal total evapotranspiration by year
+#' @param inData - data table of seasonal estimates of cotton water use by year
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
-#' @return `navsetCardTabSummary` - Summary of total evapotranspiration value based on user input
+#' @return `navsetCardTabSummary` - Summary of estimated cotton water use value based on user input
 
 
 fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
   currentYear <- lubridate::year(endDate)
   currentYearTotal <- 
-    dplyr::filter(inData, endDateYear == currentYear) %>% 
-    dplyr::pull(etTotal)
+    dplyr::filter(inData, end_date_year == currentYear) %>% 
+    dplyr::pull(water_use_seasonal_total)
   
   # For stations with only one year of data
   if (nrow(inData) == 1) {
@@ -19,17 +19,17 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
       htmltools::p(
         htmltools::HTML(
           paste0(
-            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>."
+            "Estimated cotton water use at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>."
           ),
         ),
         
         class = "figure-summary"
       )
   } else {
-    averageTotal <- mean(inData$etTotal, na.rm = TRUE)
+    averageTotal <- mean(inData$water_use_seasonal_total, na.rm = TRUE)
     previousYear <- currentYear - 1
-    previousYearText <- dplyr::filter(inData, endDateYear == previousYear)$dateYearLabel
-    previousYearTotal <- dplyr::filter(inData, endDateYear == previousYear)$etTotal
+    previousYearText <- dplyr::filter(inData, end_date_year == previousYear)$date_year_label
+    previousYearTotal <- dplyr::filter(inData, end_date_year == previousYear)$water_use_seasonal_total
     
     differenceAverage <- currentYearTotal - averageTotal
     differencePreviousYear <- currentYearTotal - previousYearTotal
@@ -66,7 +66,7 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
       htmltools::p(
         htmltools::HTML(
           paste0(
-            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>. This is ", differencePreviousYearText, " the total during this same month-day period in ", previousYearText, ", and ", differenceAverageText, " the station average."
+            "Estimated cotton water use at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>. This is ", differencePreviousYearText, " the total during this same month-day period in ", previousYearText, ", and ", differenceAverageText, " the station average."
           ),
         ),
         
