@@ -53,6 +53,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
         "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
+        "<br><b>Day<sub>season</sub>:</b> ", format(day_of_season, nsmall = 0),
         "<br><b>WU<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
@@ -81,6 +82,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       text = ~paste0(
         "<br><b>AZMet Station:</b> ", meta_station_name,
         "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
+        "<br><b>Day<sub>season</sub>:</b> ", format(day_of_season, nsmall = 0),
         "<br><b>WU<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
       ),
       showlegend = TRUE,
