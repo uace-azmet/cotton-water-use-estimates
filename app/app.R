@@ -3,7 +3,6 @@
 # Add code for the following
 # 
 # 'azmet-shiny-template.html': <!-- Google tag (gtag.js) -->
-# 'azmet-shiny-template.html': <!-- CSS specific to this AZMet Shiny app -->
 
 
 # UI --------------------
@@ -58,13 +57,6 @@ server <- function(input, output, session) {
       dplyr::filter(azmetStationMetadata, meta_station_name == input$azmetStation) %>% 
       dplyr::pull(start_date)
     
-    # if (stationStartDate > initialStartDate) {
-    #   stationStartDateMinimum <- stationStartDate
-    #   stationEndDateMinimum <- stationStartDate
-    # } else {
-    #   stationStartDateMinimum <- Sys.Date() - lubridate::years(1)
-    #   stationEndDateMinimum <- Sys.Date() - lubridate::years(1)
-    # }
     stationStartDateMinimum <- stationStartDate
     stationEndDateMinimum <- stationStartDate
     
@@ -217,7 +209,7 @@ server <- function(input, output, session) {
       add = TRUE
     )
     
-    fxn_waterUse( # calls `fxn_azDaily.R`, `fxn_waterUse.R`
+    fxn_waterUse( # calls `fxn_azDaily.R`, `fxn_waterUseSeasonalTotal.R`
       azmetStation = input$azmetStation,
       startDate = input$startDate,
       endDate = input$endDate
@@ -253,6 +245,7 @@ server <- function(input, output, session) {
     navsetCardBarChartCaption()
   })
   
+  # Having `navsetCardTab` as `output` helps with hiding the tabs on app start up
   output$navsetCardTab <- shiny::renderUI({
     shiny::req(showNavsetCardTab())
     navsetCardTab # `scr##_navsetCardTab.R`

@@ -32,24 +32,24 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
           true = as.character(lubridate::year(startDate)),
           false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
         ),
-        day_of_period = dplyr::row_number(),
+        day_of_season = dplyr::row_number() - 1,
         eto_pen_mon_in_acc = dplyr::if_else(
-          condition = day_of_period == 1,
+          condition = day_of_season == 0,
           true = NA_real_,
           false = round((cumsum(eto_pen_mon_in) - eto_pen_mon_in[1]), digits = 2)
         ),
         heat_units_55F_acc = dplyr::if_else(
-          condition = day_of_period == 1,
+          condition = day_of_season == 0,
           true = NA_real_,
           false = round((cumsum(heat_units_55F) - heat_units_55F[1]), digits = 1)
         ),
         precip_total_in_acc = dplyr::if_else(
-          condition = day_of_period == 1,
+          condition = day_of_season == 0,
           true = NA_real_,
           false = round((cumsum(precip_total_in) - precip_total_in[1]), digits = 2)
         ),
         kc = dplyr::if_else(
-          condition = day_of_period == 1,
+          condition = day_of_season == 0,
           true = NA_real_,
           false = dplyr::if_else(
             condition = heat_units_55F_acc >= 3000,
@@ -70,7 +70,7 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
           )
         ),
         water_use_in = dplyr::if_else(
-          condition = day_of_period == 1,
+          condition = day_of_season == 0,
           true = NA_real_,
           false = dplyr::if_else(
             condition = kc > 0,
@@ -79,14 +79,14 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
           )
         ),
         water_use_in_acc = dplyr::if_else(
-          condition = day_of_period == 1,
+          condition = day_of_season == 0,
           true = NA_real_,
           false = round(cumsum(tidyr::replace_na(water_use_in, 0)), digits = 2)
         )
       )
     
     singleYearTotal <-
-      fxn_waterUseTotal(
+      fxn_waterUseSeasonalTotal(
         inData = singleYearDaily,
         azmetStation = azmetStation,
         startDate = startDate,
@@ -110,8 +110,8 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
             precip_total_in_acc = NA_real_
           )
         
-        singleYearTotal$waterUseTotal <- NA_real_
-        singleYearTotal$waterUseTotalLabel <- "NA"
+        singleYearTotal$water_use_total <- NA_real_
+        singleYearTotal$water_use_total_label <- "NA"
       }
     }
 

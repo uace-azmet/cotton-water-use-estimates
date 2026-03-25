@@ -35,7 +35,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
   navsetCardTimeSeries <- 
     plotly::plot_ly( # Lines and points for `dataPreviousYears`
       data = dataPreviousYears,
-      x = ~day_of_period,
+      x = ~day_of_season,
       y = ~water_use_in_acc,
       type = "scatter",
       mode = "lines+markers",
@@ -63,7 +63,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
     plotly::add_trace( # Lines and points for `dataCurrentYear`
       inherit = FALSE,
       data = dataCurrentYear,
-      x = ~day_of_period,
+      x = ~day_of_season,
       y = ~water_use_in_acc,
       type = "scatter",
       mode = "lines+markers",
@@ -143,7 +143,7 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
         orientation = "v"
       ),
       xaxis = list(
-        range = list(~(min(day_of_period) - 0.5), ~(max(day_of_period) + 1.5)),
+        range = list(~(min(day_of_season) - 0.5), ~(max(day_of_season) + 1.5)),
         title = list(
           font = list(size = 14),
           standoff = 25,

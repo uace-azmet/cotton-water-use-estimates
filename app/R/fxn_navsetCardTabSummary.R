@@ -1,7 +1,7 @@
 #' `fxn_navsetCardTabSummary.R` - Build summary of estimated cotton water use value based on user input
 #' 
 #' @param azmetStation - AZMet station selection by user
-#' @param inData - data table of seasonal estimated cotton water use by year
+#' @param inData - data table of seasonal estimates of cotton water use by year
 #' @param startDate - Start date of period of interest
 #' @param endDate - End date of period of interest
 #' @return `navsetCardTabSummary` - Summary of estimated cotton water use value based on user input
@@ -10,8 +10,8 @@
 fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
   currentYear <- lubridate::year(endDate)
   currentYearTotal <- 
-    dplyr::filter(inData, endDateYear == currentYear) %>% 
-    dplyr::pull(waterUseTotal)
+    dplyr::filter(inData, end_date_year == currentYear) %>% 
+    dplyr::pull(water_use_seasonal_total)
   
   # For stations with only one year of data
   if (nrow(inData) == 1) {
@@ -26,10 +26,10 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
         class = "figure-summary"
       )
   } else {
-    averageTotal <- mean(inData$waterUseTotal, na.rm = TRUE)
+    averageTotal <- mean(inData$water_use_seasonal_total, na.rm = TRUE)
     previousYear <- currentYear - 1
-    previousYearText <- dplyr::filter(inData, endDateYear == previousYear)$dateYearLabel
-    previousYearTotal <- dplyr::filter(inData, endDateYear == previousYear)$waterUseTotal
+    previousYearText <- dplyr::filter(inData, end_date_year == previousYear)$date_year_label
+    previousYearTotal <- dplyr::filter(inData, end_date_year == previousYear)$water_use_seasonal_total
     
     differenceAverage <- currentYearTotal - averageTotal
     differencePreviousYear <- currentYearTotal - previousYearTotal

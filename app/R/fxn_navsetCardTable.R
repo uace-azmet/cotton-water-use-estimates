@@ -19,7 +19,7 @@ fxn_navsetCardTable <- function(inData, startDate, endDate) {
         c(
           "meta_station_name",
           "datetime",
-          "day_of_period",
+          "day_of_season",
           "eto_pen_mon_in", 
           "eto_pen_mon_in_acc",
           "heat_units_55F",
@@ -92,7 +92,7 @@ fxn_navsetCardTable <- function(inData, startDate, endDate) {
           na = "NA",
           rowHeader = TRUE
         ),
-        day_of_period = reactable::colDef(
+        day_of_season = reactable::colDef(
           name = htmltools::HTML("Day<sub>season</sub><br>"),
           html = TRUE,
           # minWidth = 100,
