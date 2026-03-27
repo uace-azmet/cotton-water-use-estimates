@@ -82,7 +82,7 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
             false = dplyr::if_else(
               condition = is.na(heat_units_55F),
               true = NA_real_,
-              false = round((cumsum(tidyr::replace_na(heat_units_55F, 0)) - heat_units_55F[1]), digits = 11)
+              false = round((cumsum(tidyr::replace_na(heat_units_55F, 0)) - heat_units_55F[1]), digits = 1)
             )
           ),
           precip_total_in_acc = dplyr::if_else(
