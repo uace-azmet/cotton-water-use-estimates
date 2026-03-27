@@ -12,29 +12,27 @@ fxn_waterUseSeasonalTotal <- function(inData, azmetStation, startDate, endDate) 
   if (lubridate::year(startDate) == lubridate::year(endDate)) { # For data request spanning a single calendar year
     dateYearLabel <- as.character(lubridate::year(startDate))
   } else { # For data request spanning two calendar years
-    dateYearLabel <- 
-      paste(
-        lubridate::year(startDate), 
-        lubridate::year(endDate), 
-        sep = "-"
-      )
+    dateYearLabel <- paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
   }
   
   if (nrow(inData) == 0) { # For case of empty data return
-    waterUseSeasonalTotal <- data.frame(matrix(
-      data = NA,
-      nrow = 1, 
-      ncol = 
-        length(
-          c(
-            "meta_station_name", 
-            "water_use_seasonal_total", 
-            "water_use_seasonal_total_label", 
-            "end_date_year", 
-            "date_year_label"
-          )
+    waterUseSeasonalTotal <- 
+      data.frame(
+        matrix(
+          data = NA,
+          nrow = 1, 
+          ncol = 
+            length(
+              c(
+                "meta_station_name", 
+                "water_use_seasonal_total", 
+                "water_use_seasonal_total_label", 
+                "end_date_year", 
+                "date_year_label"
+              )
+            )
         )
-    ))
+      )
     
     colnames(waterUseSeasonalTotal) <- 
       c(

@@ -38,7 +38,7 @@ fxn_pageBottomText <- function() {
   
   webpageCode <- a(
     "GitHub page", 
-    href="https://github.com/uace-azmet/cotton-water-use", 
+    href="https://github.com/uace-azmet/cotton-water-use-estimates", 
     target="_blank"
   )
   
@@ -71,7 +71,7 @@ fxn_pageBottomText <- function() {
           htmltools::br(), htmltools::br(),
           "AZMet daily data are from ", apiURL, " and accessed using the ", azmetrURL, " R package. Values from recent dates may be based on provisional data. More information about ", webpageDataVariables, ", ", webpageNetworkMap, ", and ", webpageStationMetadata, " is available on the ", webpageAZMet, ". Users of AZMet data and related information assume all risks of its use.",
           htmltools::br(), htmltools::br(),
-          "To cite the above AZMet data, please use: 'Arizona Meteorological Network (", todayYear, ") Arizona Meteorological Network (AZMet) Data. https:://azmet.arizona.edu. Accessed ", todayDate, "', along with 'Arizona Meteorological Network (", todayYear, ") Cotton Water Use. https://viz.datascience.arizona.edu/azmet/cotton-water-use. Accessed ", todayDate, "'.",
+          "To cite the above AZMet data, please use: 'Arizona Meteorological Network (", todayYear, ") Arizona Meteorological Network (AZMet) Data. https:://azmet.arizona.edu. Accessed ", todayDate, "', along with 'Arizona Meteorological Network (", todayYear, ") Cotton Water Use Estimates. https://viz.datascience.arizona.edu/azmet/cotton-water-use-estimates. Accessed ", todayDate, "'.",
           htmltools::br(), htmltools::br(),
           "For information on how this webpage is put together, please visit the ", webpageCode, " for this tool."
         )

@@ -6,7 +6,7 @@
 
 fxn_navsetCardTabTooltipText <- function(navsetCardTab) {
   if (navsetCardTab == "barChart") {
-    tooltipText <- "Hover over bars for values of total evapotranspiration."
+    tooltipText <- "Hover over bars for values of cotton water use estimates."
   } else if (navsetCardTab == "table") {
     tooltipText <- "Scroll or swipe over the table to view additional rows and columns (when hidden)."
   } else if (navsetCardTab == "timeSeries") {

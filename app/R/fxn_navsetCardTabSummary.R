@@ -23,14 +23,17 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
           ),
         ),
         
-        class = "figure-summary"
+        class = "navset-card-tab-summary"
       )
   } else {
     averageTotal <- mean(inData$water_use_seasonal_total, na.rm = TRUE)
     previousYear <- currentYear - 1
-    previousYearText <- dplyr::filter(inData, end_date_year == previousYear)$date_year_label
-    previousYearTotal <- dplyr::filter(inData, end_date_year == previousYear)$water_use_seasonal_total
-    
+    previousYearText <- 
+      dplyr::filter(inData, end_date_year == previousYear) %>% 
+      dplyr::pull(date_year_label)
+    previousYearTotal <- 
+      dplyr::filter(inData, end_date_year == previousYear) %>% 
+      dplyr::pull(water_use_seasonal_total)
     differenceAverage <- currentYearTotal - averageTotal
     differencePreviousYear <- currentYearTotal - previousYearTotal
     

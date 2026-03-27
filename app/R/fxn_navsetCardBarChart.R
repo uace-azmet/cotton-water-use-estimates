@@ -13,7 +13,7 @@
 
 fxn_navsetCardBarChart <- function(inData, azmetStation) {
   
-  # Inputs --
+  # Inputs -----
   
   averageTotal <- mean(inData$water_use_seasonal_total, na.rm = TRUE)
   
@@ -31,7 +31,7 @@ fxn_navsetCardBarChart <- function(inData, azmetStation) {
   tickvals <- inData$end_date_year
   
   
-  # Figure --
+  # Bar Chart -----
   
   if (nrow(inData) == 1) { # For stations with only one year of data
     navsetCardBarChart <- 
