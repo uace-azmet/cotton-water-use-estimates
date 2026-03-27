@@ -94,8 +94,7 @@ server <- function(input, output, session) {
       shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
     } 
     
-    if (input$startDate %within% yugNodataInterval) {
-      # shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
+    if (input$azmetStation == "Yuma N.Gila" & lubridate::int_overlaps(int1 = yugNodataInterval, int2 = lubridate::interval(input$startDate, input$endDate)) == TRUE) {
       shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`    input$azmetStation == "Yuma N.Gila" & 
     }
   })
@@ -216,15 +215,48 @@ server <- function(input, output, session) {
     shiny::validate(
       shiny::need(
         expr = input$startDate <= input$endDate,
-        message = FALSE
+        message = FALSE # Failing validation test
       ),
       shiny::need(
-        expr = !(input$startDate %within% yugNodataInterval), # & input$azmetStation != "Yuma N.Gila"
+        expr = 
+          !(
+            input$azmetStation == "Yuma N.Gila" &
+              lubridate::int_overlaps(
+                int1 = yugNodataInterval, 
+                int2 = lubridate::interval(input$startDate, input$endDate)
+              )
+          ),
         message = FALSE
       )
+      
+      # if (input$azmetStation == "Yuma N.Gila" &
+      #     lubridate::int_overlaps(
+      #       int1 = yugNodataInterval,
+      #       int2 = lubridate::interval(startDate, endDate)
+      #     ) == TRUE
+      #    ) {
+      #   FALSE # Failing validation test
+      # } else {
+      #   NULL # Passing validation test
+      # }
+      # if (input$startDate %within% yugNoRequestInterval | input$endDate %within% yugNoRequestInterval & 
+      #     input$azmetStation == "Yuma N.Gila") {
+      #   FALSE # Failing test
+      # } else {
+      #   NULL # Passing test
+      # }
     )
     
-   idEstimateWaterUse <- shiny::showNotification(
+    # if (input$azmetStation == "Yuma N.Gila" &
+    #     lubridate::int_overlaps(
+    #       int1 = yugNodataInterval,
+    #       int2 = lubridate::interval(input$startDate, input$endDate)
+    #     ) == TRUE
+    # ) {
+    #   shiny::validate(FALSE) # Failing validation test
+    # }
+    
+    idEstimateWaterUse <- shiny::showNotification(
       ui = "Estimating cotton water use . . .",
       action = NULL,
       duration = NULL,
