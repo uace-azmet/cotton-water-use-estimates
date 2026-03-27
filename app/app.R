@@ -95,33 +95,9 @@ server <- function(input, output, session) {
     } 
     
     if (input$azmetStation == "Yuma N.Gila" & lubridate::int_overlaps(int1 = yugNodataInterval, int2 = lubridate::interval(input$startDate, input$endDate)) == TRUE) {
-      shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`    input$azmetStation == "Yuma N.Gila" & 
+      shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`
     }
   })
-  
-  # shiny::observeEvent(input$estimateWaterUse, {
-  #   if (input$azmetStation == "Yuma N.Gila" & input$startDate >= as.Date("2021-06-16") & input$startDate <= as.Date("2021-10-10") & input$endDate >= as.Date("2021-06-16") & input$endDate <= as.Date("2021-10-10")) {
-  #     # shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
-  #     shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`
-  #   }
-  # })
-   
-    
-    
-    # startDate <- as.Date("2021-07-01")
-    # endDate <- as.Date("2021-07-30")
-
-    # if (azmetStation == "Yuma N.Gila" & startDate >= as.Date("2021-06-16") & startDate <= as.Date("2021-10-10") & endDate >= as.Date("2021-06-16") & endDate <= as.Date("2021-10-10")) {
-    #   # shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
-    #   print("datepickerYumaNGilaErrorModal") # `scr##_datepickerYumaNGilaErrorModal.R`
-    # }
-    # if (startDate >= as.Date("2021-06-16") & startDate <= as.Date("2021-10-10")) {
-    #   if (endDate >= as.Date("2021-06-16") & endDate <= as.Date("2021-10-10")) {
-    #     print("datepickerYumaNGilaErrorModal") # `scr##_datepickerYumaNGilaErrorModal.R`
-    #   }
-    # }
-
-
   
   # To update icon in navsetCardTab title
   shiny::observeEvent(input$navsetCardTab, {
