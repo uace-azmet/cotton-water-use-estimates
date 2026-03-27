@@ -103,13 +103,13 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
               true = NA_real_,
               false = dplyr::if_else(
                 condition = heat_units_55F_acc >= 3000,
-                true = 2.3 - (0.0004 * heat_units_55F_acc),
+                true = round(2.3 - (0.0004 * heat_units_55F_acc), digits = 7),
                 false = dplyr::if_else(
                   condition = heat_units_55F_acc >= 2000,
                   true = 1.1,
                   false = dplyr::if_else(
                     condition = heat_units_55F_acc >= 600,
-                    true = (0.000743 * heat_units_55F_acc) - 0.33,
+                    true = round((0.000743 * heat_units_55F_acc) - 0.33, digits = 7),
                     false = dplyr::if_else(
                       condition = heat_units_55F_acc >= 1,
                       true = 0.1,
