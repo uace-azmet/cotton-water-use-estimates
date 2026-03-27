@@ -60,7 +60,7 @@ fxn_navsetCardBarChartCaption <- function(azmetStation, inData, startDate, endDa
         htmltools::HTML(
           paste(
             standardText,
-            "However, we do not show cotton water use estimates for the year with a month-day period that overlaps the period from June 16, 2021 through October 10, 2021, when the ", azmetStation, " station was not in operation.",
+            "However, we do not show cotton water use estimates for the year with a month-day period that overlaps the period from June 16, 2021 through October 21, 2021, when the ", azmetStation, " station was not in operation.",
             variableKeyText,
             sep = " "
           )

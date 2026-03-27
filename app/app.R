@@ -92,8 +92,35 @@ server <- function(input, output, session) {
   shiny::observeEvent(input$estimateWaterUse, {
     if (input$startDate > input$endDate) {
       shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
-    }
+    } #else if (input$azmetStation == "Yuma N.Gila" & input$startDate >= as.Date("2021-06-16") & input$startDate <= as.Date("2021-10-10") & input$endDate >= as.Date("2021-06-16") & input$endDate <= as.Date("2021-10-10")) {
+    #   # shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
+    #   shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`
+    # }
   })
+  
+  # shiny::observeEvent(input$estimateWaterUse, {
+  #   if (input$azmetStation == "Yuma N.Gila" & input$startDate >= as.Date("2021-06-16") & input$startDate <= as.Date("2021-10-10") & input$endDate >= as.Date("2021-06-16") & input$endDate <= as.Date("2021-10-10")) {
+  #     # shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
+  #     shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`
+  #   }
+  # })
+   
+    
+    
+    # startDate <- as.Date("2021-07-01")
+    # endDate <- as.Date("2021-07-30")
+
+    # if (azmetStation == "Yuma N.Gila" & startDate >= as.Date("2021-06-16") & startDate <= as.Date("2021-10-10") & endDate >= as.Date("2021-06-16") & endDate <= as.Date("2021-10-10")) {
+    #   # shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
+    #   print("datepickerYumaNGilaErrorModal") # `scr##_datepickerYumaNGilaErrorModal.R`
+    # }
+    # if (startDate >= as.Date("2021-06-16") & startDate <= as.Date("2021-10-10")) {
+    #   if (endDate >= as.Date("2021-06-16") & endDate <= as.Date("2021-10-10")) {
+    #     print("datepickerYumaNGilaErrorModal") # `scr##_datepickerYumaNGilaErrorModal.R`
+    #   }
+    # }
+
+
   
   # To update icon in navsetCardTab title
   shiny::observeEvent(input$navsetCardTab, {
@@ -180,11 +207,7 @@ server <- function(input, output, session) {
   })
   
   pageBottomText <- shiny::eventReactive(waterUse(), {
-    fxn_pageBottomText(
-      # startDate = input$startDate, 
-      # endDate = input$endDate,
-      # etEquation = input$etEquation
-    )
+    fxn_pageBottomText()
   })
   
   waterUse <- shiny::eventReactive(input$estimateWaterUse, {
@@ -192,10 +215,31 @@ server <- function(input, output, session) {
       shiny::need(
         expr = input$startDate <= input$endDate,
         message = FALSE
-      )
+      )#,
+      # shiny::need(
+      #   expr = input$azmetStation != "Yuma N.Gila" & !(input$startDate %within% lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))) & !(input$endDate %within% lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))),
+      #   message = FALSE
+      # )
     )
     
-    idEstimateWaterUse <- shiny::showNotification(
+   #  shiny::validate(
+   #    shiny::need(
+   #      expr = input$azmetStation == "Yuma N.Gila" &&
+   #        (input$startDate %within% 
+   #            lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))) &&
+   #        (input$endDate %within% 
+   #            lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))),
+   #      message = FALSE
+   #    )
+   #  )
+   #  
+   # azmetStation != "Yuma N.Gila" &&
+   #    !(startDate %within%
+   #        lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))) &&
+   #    !(endDate %within%
+   #        lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10")))
+    
+   idEstimateWaterUse <- shiny::showNotification(
       ui = "Estimating cotton water use . . .",
       action = NULL,
       duration = NULL,

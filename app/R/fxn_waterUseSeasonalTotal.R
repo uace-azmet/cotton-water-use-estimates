@@ -47,7 +47,7 @@ fxn_waterUseSeasonalTotal <- function(inData, azmetStation, startDate, endDate) 
     
     waterUseSeasonalTotal <- waterUseSeasonalTotal %>%
       dplyr::mutate(meta_station_name = azmetStation) %>%
-      dplyr::mutate(water_use_seasonal_total = 0.00) %>%
+      dplyr::mutate(water_use_seasonal_total = NA_real_) %>%
       dplyr::mutate(water_use_seasonal_total_label = "NA") %>%
       dplyr::mutate(end_date_year = lubridate::year(endDate)) %>%
       dplyr::mutate(date_year_label = dateYearLabel)

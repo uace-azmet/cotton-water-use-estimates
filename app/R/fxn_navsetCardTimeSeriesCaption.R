@@ -20,12 +20,12 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
   if (length(unique(inData$date_year_label)) == 1) {
     standardText <- 
       paste0(
-        "Estimated cotton water use (black line in graph) is based on the sum of daily totals during the period of interest. Data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+        "Estimated cotton water use (black line in graph) is based on the sum of daily totals during the period of interest. Line breaks denote no data for that day. Data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   } else {
     standardText <- 
       paste0(
-        "Estimated cotton water use for the current year (black line in graph) is based on the sum of daily totals during the period of interest. Totals for past years (gray lines in graph) are based on the same start and end month and day, but during previous years. Data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
+        "Estimated cotton water use for the current year (black line in graph) is based on the sum of daily totals during the period of interest. Totals for past years (gray lines in graph) are based on the same start and end month and day, but during previous years. Line breaks denote no data for that day. Data for the ", azmetStation, " station in the new AZMet database currently go back to ", gsub(" 0", " ", format(azmetStationStartDate, "%B %d, %Y")), "."
       )
   }
   
@@ -61,7 +61,7 @@ fxn_navsetCardTimeSeriesCaption <- function(azmetStation, inData, startDate, end
         htmltools::HTML(
           paste(
             standardText,
-            "However, we do not show cotton water use estimates for the year with a month-day period that overlaps the period from June 16, 2021 through October 10, 2021, when the ", azmetStation, " station was not in operation.",
+            "However, we do not show cotton water use estimates for dates during or after the period from June 16, 2021 through October 21, 2021, when the ", azmetStation, " station was not in operation.",
             variableKeyText,
             sep = " "
           )

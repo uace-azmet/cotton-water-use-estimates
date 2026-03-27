@@ -64,10 +64,8 @@ initialStation <-
   ) %>% 
   dplyr::pull(meta_station_name)
 
-navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
-
-showNavsetCardTab <- reactiveVal(FALSE)
-showPageBottomText <- reactiveVal(FALSE)
+yugNodataStartDate <- lubridate::date("2021-06-16")
+yugNodataEndDate <- lubridate::date("2021-10-21")
 
 
 # Daily Data --
@@ -250,3 +248,10 @@ if (initialStationStartDate > initialStartDate) {
   initialStartDate <- initialStationStartDate
 }
 
+
+# Other --
+
+navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
+
+showNavsetCardTab <- reactiveVal(FALSE)
+showPageBottomText <- reactiveVal(FALSE)
