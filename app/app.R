@@ -92,10 +92,12 @@ server <- function(input, output, session) {
   shiny::observeEvent(input$estimateWaterUse, {
     if (input$startDate > input$endDate) {
       shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
-    } #else if (input$azmetStation == "Yuma N.Gila" & input$startDate >= as.Date("2021-06-16") & input$startDate <= as.Date("2021-10-10") & input$endDate >= as.Date("2021-06-16") & input$endDate <= as.Date("2021-10-10")) {
-    #   # shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
-    #   shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`
-    # }
+    } 
+    
+    if (input$startDate %within% yugNodataInterval) {
+      # shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
+      shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`    input$azmetStation == "Yuma N.Gila" & 
+    }
   })
   
   # shiny::observeEvent(input$estimateWaterUse, {
@@ -215,29 +217,12 @@ server <- function(input, output, session) {
       shiny::need(
         expr = input$startDate <= input$endDate,
         message = FALSE
-      )#,
-      # shiny::need(
-      #   expr = input$azmetStation != "Yuma N.Gila" & !(input$startDate %within% lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))) & !(input$endDate %within% lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))),
-      #   message = FALSE
-      # )
+      ),
+      shiny::need(
+        expr = !(input$startDate %within% yugNodataInterval), # & input$azmetStation != "Yuma N.Gila"
+        message = FALSE
+      )
     )
-    
-   #  shiny::validate(
-   #    shiny::need(
-   #      expr = input$azmetStation == "Yuma N.Gila" &&
-   #        (input$startDate %within% 
-   #            lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))) &&
-   #        (input$endDate %within% 
-   #            lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))),
-   #      message = FALSE
-   #    )
-   #  )
-   #  
-   # azmetStation != "Yuma N.Gila" &&
-   #    !(startDate %within%
-   #        lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10"))) &&
-   #    !(endDate %within%
-   #        lubridate::interval(lubridate::ymd("2021-06-16"), lubridate::ymd("2021-10-10")))
     
    idEstimateWaterUse <- shiny::showNotification(
       ui = "Estimating cotton water use . . .",

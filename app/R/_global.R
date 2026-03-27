@@ -66,6 +66,7 @@ initialStation <-
 
 yugNodataStartDate <- lubridate::date("2021-06-16")
 yugNodataEndDate <- lubridate::date("2021-10-21")
+yugNodataInterval <- lubridate::interval(yugNodataStartDate, yugNodataEndDate)
 
 
 # Daily Data --
