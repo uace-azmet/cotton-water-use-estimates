@@ -13,8 +13,7 @@ sidebar <- bslib::sidebar(
   
   htmltools::p(
     bsicons::bs_icon("sliders", class = "bolder-icon"), 
-    htmltools::HTML("&nbsp;"), 
-    htmltools::HTML("<strong>DATA OPTIONS</strong>&nbsp;"),
+    htmltools::HTML("&nbsp;<strong>DATA OPTIONS</strong>&nbsp;"),
     bslib::tooltip(
       bsicons::bs_icon("info-circle"),
       "Select an AZMet station, a planting date, and a date for the end of the period of interest. Then, click or tap 'ESTIMATE WATER USE'.",

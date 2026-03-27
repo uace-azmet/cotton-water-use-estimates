@@ -10,10 +10,7 @@
 fxn_navsetCardBarChartCaption <- function(azmetStation, inData, startDate, endDate) {
   
   azmetStationStartDate <- 
-    dplyr::filter(
-      azmetStationMetadata, 
-      meta_station_name == azmetStation
-    ) %>% 
+    dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation) %>% 
     dplyr::pull(start_date)
   
   if (nrow(inData) == 1) {
@@ -35,16 +32,10 @@ fxn_navsetCardBarChartCaption <- function(azmetStation, inData, startDate, endDa
   nonOperational <- 0
   
   if (azmetStation == "Yuma N.Gila") {
-    nodataDateRange <-
-      lubridate::interval(
-        start = lubridate::date("2021-06-16"),
-        end = lubridate::date("2021-10-21")
-      )
-
     while (startDate >= azmetStationStartDate) {
       userDateRange <- lubridate::interval(start = startDate, end = endDate)
 
-      if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = userDateRange) == TRUE) {
+      if (lubridate::int_overlaps(int1 = yugNodataInterval, int2 = userDateRange) == TRUE) {
         nonOperational <- 1
       }
 
@@ -60,7 +51,7 @@ fxn_navsetCardBarChartCaption <- function(azmetStation, inData, startDate, endDa
         htmltools::HTML(
           paste(
             standardText,
-            "However, we do not show cotton water use estimates for the year with a month-day period that overlaps the period from June 16, 2021 through October 10, 2021, when the ", azmetStation, " station was not in operation.",
+            "However, we do not show cotton water use estimates for the year with a month-day period that overlaps the period from June 16, 2021 through October 21, 2021, when the ", azmetStation, " station was not in operation.",
             variableKeyText,
             sep = " "
           )

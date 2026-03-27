@@ -1,9 +1,5 @@
 # Shiny app to estimate water use of cotton based on measurements at AZMet stations and by date range
 
-# Add code for the following
-# 
-# 'azmet-shiny-template.html': <!-- Google tag (gtag.js) -->
-
 
 # UI --------------------
 
@@ -89,9 +85,20 @@ server <- function(input, output, session) {
     )
   })
   
+  # Catch input errors before data download, show error modal
   shiny::observeEvent(input$estimateWaterUse, {
     if (input$startDate > input$endDate) {
       shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
+    } 
+    
+    if (
+      input$azmetStation == "Yuma N.Gila" & 
+      lubridate::int_overlaps(
+        int1 = yugNodataInterval, 
+        int2 = lubridate::interval(input$startDate, input$endDate)
+      ) == TRUE
+    ) {
+      shiny::showModal(datepickerYumaNGilaErrorModal) # `scr##_datepickerYumaNGilaErrorModal.R`
     }
   })
   
@@ -99,13 +106,10 @@ server <- function(input, output, session) {
   shiny::observeEvent(input$navsetCardTab, {
     if (input$navsetCardTab == "barChart") {
       navsetCardTabTitleIcon("bar-chart-fill")
-      # print("bar-chart-fill")
     } else if (input$navsetCardTab == "table") {
       navsetCardTabTitleIcon("table")
-      # print("table")
     } else if (input$navsetCardTab == "timeSeries") {
       navsetCardTabTitleIcon("graph-up")
-      # print("graph-up")
     }
   })
   
@@ -180,18 +184,25 @@ server <- function(input, output, session) {
   })
   
   pageBottomText <- shiny::eventReactive(waterUse(), {
-    fxn_pageBottomText(
-      # startDate = input$startDate, 
-      # endDate = input$endDate,
-      # etEquation = input$etEquation
-    )
+    fxn_pageBottomText()
   })
   
   waterUse <- shiny::eventReactive(input$estimateWaterUse, {
+    # Catch input errors before data download, show error modal
     shiny::validate(
       shiny::need(
         expr = input$startDate <= input$endDate,
-        message = FALSE
+        message = FALSE # Failing validation test
+      ),
+      shiny::need(
+        expr = 
+          !(input$azmetStation == "Yuma N.Gila" &
+              lubridate::int_overlaps(
+                int1 = yugNodataInterval, 
+                int2 = lubridate::interval(input$startDate, input$endDate)
+              )
+          ),
+        message = FALSE # Failing validation test
       )
     )
     

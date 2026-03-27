@@ -1,7 +1,7 @@
-datepickerErrorModal <- 
+datepickerYumaNGilaErrorModal <- 
   shiny::modalDialog(
     htmltools::HTML(
-      "<em>Please select a <b>Planting Date</b> that is earlier than or the same as the <b>End Date</b>.</em>"
+      "<em>The Yuma N.Gila station was not in operation from June 16, 2021 through October 10, 2021. To specify a period of interest during that year, please select both a <b>Planting Date</b> and <b>End Date</b> prior to or after this period."
     ),
     easyClose = FALSE,
     fade = FALSE,

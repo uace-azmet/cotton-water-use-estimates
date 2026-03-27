@@ -10,7 +10,7 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
   azmetStationStartDate <- 
     dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation) %>% 
     dplyr::pull(start_date)
-    
+  
   azDaily <- 
     fxn_azDaily(
       azmetStation = azmetStation,
@@ -19,70 +19,101 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
     )
   
   while (startDate >= azmetStationStartDate) {
-    
-    # Calculate ET and precipitation accumulation by day for individual year
     singleYearDaily <- 
       dplyr::filter(
         azDaily,
         datetime >= startDate & datetime <= endDate
-      ) %>% 
+      )
+    
+    singleYearDaily <- singleYearDaily %>% 
       dplyr::mutate(
-        date_year_label = dplyr::if_else(
-          condition = lubridate::year(startDate) == lubridate::year(endDate),
-          true = as.character(lubridate::year(startDate)),
-          false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
-        ),
+        date_year_label = 
+          dplyr::if_else(
+            condition = lubridate::year(startDate) == lubridate::year(endDate),
+            true = as.character(lubridate::year(startDate)),
+            false = paste(lubridate::year(startDate), lubridate::year(endDate), sep = "-")
+          ),
         day_of_season = dplyr::row_number() - 1,
-        eto_pen_mon_in_acc = dplyr::if_else(
-          condition = day_of_season == 0,
-          true = NA_real_,
-          false = round((cumsum(eto_pen_mon_in) - eto_pen_mon_in[1]), digits = 2)
-        ),
-        heat_units_55F_acc = dplyr::if_else(
-          condition = day_of_season == 0,
-          true = NA_real_,
-          false = round((cumsum(heat_units_55F) - heat_units_55F[1]), digits = 1)
-        ),
-        precip_total_in_acc = dplyr::if_else(
-          condition = day_of_season == 0,
-          true = NA_real_,
-          false = round((cumsum(precip_total_in) - precip_total_in[1]), digits = 2)
-        ),
-        kc = dplyr::if_else(
-          condition = day_of_season == 0,
-          true = NA_real_,
-          false = dplyr::if_else(
-            condition = heat_units_55F_acc >= 3000,
-            true = 2.3 - (0.0004 * heat_units_55F_acc),
+        eto_pen_mon_in_acc = 
+          dplyr::if_else(
+            condition = day_of_season == 0,
+            true = NA_real_,
             false = dplyr::if_else(
-              condition = heat_units_55F_acc >= 2000,
-              true = 1.1,
+              condition = is.na(eto_pen_mon_in),
+              true = NA_real_,
+              false = round((cumsum(tidyr::replace_na(eto_pen_mon_in, 0)) - eto_pen_mon_in[1]), digits = 2)
+            )
+          ),
+        heat_units_55F_acc = 
+          dplyr::if_else(
+            condition = day_of_season == 0,
+            true = NA_real_,
+            false = dplyr::if_else(
+              condition = is.na(heat_units_55F),
+              true = NA_real_,
+              false = round((cumsum(tidyr::replace_na(heat_units_55F, 0)) - heat_units_55F[1]), digits = 1)
+            )
+          ),
+        precip_total_in_acc = 
+          dplyr::if_else(
+            condition = day_of_season == 0,
+            true = NA_real_,
+            false = dplyr::if_else(
+              condition = is.na(precip_total_in),
+              true = NA_real_,
+              false = round((cumsum(tidyr::replace_na(precip_total_in, 0)) - precip_total_in[1]), digits = 2)
+            )
+          ),
+        kc = 
+          dplyr::if_else(
+            condition = day_of_season == 0,
+            true = NA_real_,
+            false = dplyr::if_else(
+              condition = is.na(heat_units_55F),
+              true = NA_real_,
               false = dplyr::if_else(
-                condition = heat_units_55F_acc >= 600,
-                true = (0.000743 * heat_units_55F_acc) - 0.33,
+                condition = heat_units_55F_acc >= 3000,
+                true = round(2.3 - (0.0004 * heat_units_55F_acc), digits = 7),
                 false = dplyr::if_else(
-                  condition = heat_units_55F_acc >= 1,
-                  true = 0.1,
-                  false = 0
+                  condition = heat_units_55F_acc >= 2000,
+                  true = 1.1,
+                  false = dplyr::if_else(
+                    condition = heat_units_55F_acc >= 600,
+                    true = round((0.000743 * heat_units_55F_acc) - 0.33, digits = 7),
+                    false = dplyr::if_else(
+                      condition = heat_units_55F_acc >= 1,
+                      true = 0.1,
+                      false = 0
+                    )
+                  )
                 )
               )
             )
+          ),
+        water_use_in = 
+          dplyr::if_else(
+            condition = day_of_season == 0,
+            true = NA_real_,
+            false = dplyr::if_else(
+              condition = is.na(eto_pen_mon_in) | is.na(kc),
+              true = NA_real_,
+              false = dplyr::if_else(
+                condition = kc > 0,
+                true = round(kc * eto_pen_mon_in, digits = 2),
+                false = 0
+              ) 
+            )
+          ),
+        water_use_in_acc = 
+          dplyr::if_else(
+            condition = day_of_season == 0,
+            true = NA_real_,
+            false = dplyr::if_else(
+              condition = is.na(water_use_in),
+              true = NA_real_,
+              false = round(cumsum(tidyr::replace_na(water_use_in, 0)), digits = 2)
+            )
           )
-        ),
-        water_use_in = dplyr::if_else(
-          condition = day_of_season == 0,
-          true = NA_real_,
-          false = dplyr::if_else(
-            condition = kc > 0,
-            true = round(kc * eto_pen_mon_in, digits = 2),
-            false = 0
-          )
-        ),
-        water_use_in_acc = dplyr::if_else(
-          condition = day_of_season == 0,
-          true = NA_real_,
-          false = round(cumsum(tidyr::replace_na(water_use_in, 0)), digits = 2)
-        )
       )
     
     singleYearTotal <-
@@ -95,23 +126,54 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
     
     # Account for multi-month absence of YUG data in 2021
     if (azmetStation == "Yuma N.Gila") {
-      nodataDateRange <-
-        lubridate::interval(
-          start = lubridate::date("2021-06-16"),
-          end = lubridate::date("2021-10-21")
-        )
-
       userDateRange <- lubridate::interval(start = startDate, end = endDate)
-
-      if (lubridate::int_overlaps(int1 = nodataDateRange, int2 = userDateRange) == TRUE) {
-        singleYearDaily <- singleYearDaily %>% 
+      
+      if (lubridate::int_overlaps(int1 = yugNodataInterval, int2 = userDateRange) == TRUE) {
+        singleYearDaily <- singleYearDaily %>%
           dplyr::mutate(
-            eto_pen_mon_in_acc = NA_real_,
-            precip_total_in_acc = NA_real_
+            eto_pen_mon_in_acc = 
+              dplyr::if_else(
+                condition = datetime < yugNodataStartDate,
+                true = eto_pen_mon_in_acc,
+                false = NA_real_
+              ),
+            heat_units_55F_acc = 
+              dplyr::if_else(
+                condition = datetime < yugNodataStartDate,
+                true = heat_units_55F_acc,
+                false = NA_real_
+              ),
+            precip_total_in_acc = 
+              dplyr::if_else(
+                condition = datetime < yugNodataStartDate,
+                true = precip_total_in_acc,
+                false = NA_real_
+              ),
+            kc = 
+              dplyr::if_else(
+                condition = datetime < yugNodataStartDate,
+                true = kc,
+                false = NA_real_
+              ),
+            water_use_in = 
+              dplyr::if_else(
+                condition = datetime < yugNodataStartDate,
+                true = water_use_in,
+                false = NA_real_
+              ),
+            water_use_in_acc = 
+              dplyr::if_else(
+                condition = datetime < yugNodataStartDate,
+                true = water_use_in_acc,
+                false = NA_real_
+              )
           )
         
-        singleYearTotal$water_use_total <- NA_real_
-        singleYearTotal$water_use_total_label <- "NA"
+        singleYearTotal <- singleYearTotal %>% 
+          dplyr::mutate(
+            water_use_seasonal_total = NA_real_,
+            water_use_seasonal_total_label = "NA"
+          )
       }
     }
 

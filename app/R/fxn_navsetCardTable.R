@@ -8,6 +8,7 @@
 
 fxn_navsetCardTable <- function(inData, startDate, endDate) {
   
+  
   # Inputs -----
   
   inData <- inData %>% 
@@ -43,174 +44,186 @@ fxn_navsetCardTable <- function(inData, startDate, endDate) {
   navsetCardTable <- inData |>
     reactable::reactable(
       columns = list(
-        meta_station_name = reactable::colDef(
-          name = "Station",
-          #aggregate = NULL,
-          #sortable = NULL,
-          #resizable = NULL,
-          #filterable = NULL,
-          #searchable = NULL,
-          #filterMethod = NULL,
-          #show = TRUE,
-          #defaultSortOrder = NULL,
-          #sortNALast = FALSE,
-          #format = NULL,
-          #cell = NULL,
-          #grouped = NULL,
-          #aggregated = NULL,
-          #header = NULL,
-          #footer = NULL,
-          #details = NULL,
-          #filterInput = NULL,
-          html = TRUE,
-          na = "NA",
-          rowHeader = FALSE,
-          minWidth = 150,
-          #maxWidth = NULL,
-          #width = NULL,
-          #align = NULL,
-          #vAlign = NULL,
-          #headerVAlign = NULL,
-          # sticky = "left",
-          # class = "table-reactable-column-station",
-          # style = list(
-          #   borderRight = "1px solid #989898",
-          #   boxShadow = "1px 0px 0px 0px #e3e3e3"
-          # ),
-          #headerClass = NULL,
-          # headerStyle = list(
-          #   borderRight = "1px solid #989898",
-          #   boxShadow = "1px 1px 0px 0px #e3e3e3"
-          # ),
-          #footerClass = NULL,
-          #footerStyle = NULL
-        ), 
-        datetime = reactable::colDef(
-          name = "Date",
-          html = TRUE,
-          # minWidth = 100,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        day_of_season = reactable::colDef(
-          name = htmltools::HTML("Day<sub>season</sub><br>"),
-          html = TRUE,
-          # minWidth = 100,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        water_use_in = reactable::colDef(
-          name = 
-            htmltools::HTML(
-              paste0(
-                "WU<br>", 
-                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
-              )
-            ),
-          format = reactable::colFormat(digits = 2),
-          html = TRUE,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        water_use_in_acc = reactable::colDef(
-          name = 
-            htmltools::HTML(
-              paste0(
-                "WU<sub>cumulative</sub><br>",
-                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
-              )
-            ),
-          format = reactable::colFormat(digits = 2),
-          html = TRUE,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        et_total_in = reactable::colDef(
-          name = 
-            htmltools::HTML(
-              paste0(
-                "ET<br>", 
-                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
-              )
-            ),
-          format = reactable::colFormat(digits = 2),
-          html = TRUE,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        et_total_in_acc = reactable::colDef(
-          name = 
-            htmltools::HTML(
-              paste0(
-                "ET<sub>cumulative</sub><br>",
-                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
-              )
-            ),
-          format = reactable::colFormat(digits = 2),
-          html = TRUE,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        kc = reactable::colDef(
-          name = htmltools::HTML("K<sub>c</sub><br>"),
-          format = reactable::colFormat(digits = 3),
-          html = TRUE,
-          # minWidth = 100,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        heat_units_55F = reactable::colDef(
-          name = 
-            htmltools::HTML(
-              paste0(
-                "HU<br>", 
-                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(DD °F)")
-              )
-            ),
-          format = reactable::colFormat(digits = 1),
-          html = TRUE,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        heat_units_55F_acc = reactable::colDef(
-          name = 
-            htmltools::HTML(
-              paste0(
-                "HU<sub>cumulative</sub><br>",
-                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(DD °F)")
-              )
-            ),
-          format = reactable::colFormat(digits = 1),
-          html = TRUE,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        precip_total_in = reactable::colDef(
-          name = 
-            htmltools::HTML(
-              paste0(
-                "P<br>", 
-                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
-              )
-            ),
-          format = reactable::colFormat(digits = 2),
-          html = TRUE,
-          na = "NA",
-          rowHeader = TRUE
-        ),
-        precip_total_in_acc = reactable::colDef(
-          name = 
-            htmltools::HTML(
-              paste0(
-                "P<sub>cumulative</sub><br>",
-                tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
-              )
-            ),
-          format = reactable::colFormat(digits = 2),
-          html = TRUE,
-          na = "NA",
-          rowHeader = TRUE
-        )
+        meta_station_name = 
+          reactable::colDef(
+            name = "Station",
+            #aggregate = NULL,
+            #sortable = NULL,
+            #resizable = NULL,
+            #filterable = NULL,
+            #searchable = NULL,
+            #filterMethod = NULL,
+            #show = TRUE,
+            #defaultSortOrder = NULL,
+            #sortNALast = FALSE,
+            #format = NULL,
+            #cell = NULL,
+            #grouped = NULL,
+            #aggregated = NULL,
+            #header = NULL,
+            #footer = NULL,
+            #details = NULL,
+            #filterInput = NULL,
+            html = TRUE,
+            na = "NA",
+            rowHeader = FALSE,
+            minWidth = 150,
+            #maxWidth = NULL,
+            #width = NULL,
+            #align = NULL,
+            #vAlign = NULL,
+            #headerVAlign = NULL,
+            # sticky = "left",
+            # class = "table-reactable-column-station",
+            # style = list(
+            #   borderRight = "1px solid #989898",
+            #   boxShadow = "1px 0px 0px 0px #e3e3e3"
+            # ),
+            #headerClass = NULL,
+            # headerStyle = list(
+            #   borderRight = "1px solid #989898",
+            #   boxShadow = "1px 1px 0px 0px #e3e3e3"
+            # ),
+            #footerClass = NULL,
+            #footerStyle = NULL
+          ), 
+        datetime = 
+          reactable::colDef(
+            name = "Date",
+            html = TRUE,
+            # minWidth = 100,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        day_of_season = 
+          reactable::colDef(
+            name = htmltools::HTML("Day<sub>season</sub><br>"),
+            html = TRUE,
+            # minWidth = 100,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        water_use_in = 
+          reactable::colDef(
+            name = 
+              htmltools::HTML(
+                paste0(
+                  "WU<br>", 
+                  tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
+                )
+              ),
+            format = reactable::colFormat(digits = 2),
+            html = TRUE,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        water_use_in_acc = 
+          reactable::colDef(
+            name = 
+              htmltools::HTML(
+                paste0(
+                  "WU<sub>cumulative</sub><br>",
+                  tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
+                )
+              ),
+            format = reactable::colFormat(digits = 2),
+            html = TRUE,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        et_total_in = 
+          reactable::colDef(
+            name = 
+              htmltools::HTML(
+                paste0(
+                  "ET<br>", 
+                  tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
+                )
+              ),
+            format = reactable::colFormat(digits = 2),
+            html = TRUE,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        et_total_in_acc = 
+          reactable::colDef(
+            name = 
+              htmltools::HTML(
+                paste0(
+                  "ET<sub>cumulative</sub><br>",
+                  tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
+                )
+              ),
+            format = reactable::colFormat(digits = 2),
+            html = TRUE,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        kc = 
+          reactable::colDef(
+            name = htmltools::HTML("K<sub>c</sub><br>"),
+            format = reactable::colFormat(digits = 3),
+            html = TRUE,
+            # minWidth = 100,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        heat_units_55F = 
+          reactable::colDef(
+            name = 
+              htmltools::HTML(
+                paste0(
+                  "HU<br>", 
+                  tags$span(style = "font-weight: normal; font-size: 0.8rem", "(DD °F)")
+                )
+              ),
+            format = reactable::colFormat(digits = 1),
+            html = TRUE,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        heat_units_55F_acc = 
+          reactable::colDef(
+            name = 
+              htmltools::HTML(
+                paste0(
+                  "HU<sub>cumulative</sub><br>",
+                  tags$span(style = "font-weight: normal; font-size: 0.8rem", "(DD °F)")
+                )
+              ),
+            format = reactable::colFormat(digits = 1),
+            html = TRUE,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        precip_total_in = 
+          reactable::colDef(
+            name = 
+              htmltools::HTML(
+                paste0(
+                  "P<br>", 
+                  tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
+                )
+              ),
+            format = reactable::colFormat(digits = 2),
+            html = TRUE,
+            na = "NA",
+            rowHeader = TRUE
+          ),
+        precip_total_in_acc = 
+          reactable::colDef(
+            name = 
+              htmltools::HTML(
+                paste0(
+                  "P<sub>cumulative</sub><br>",
+                  tags$span(style = "font-weight: normal; font-size: 0.8rem", "(in)")
+                )
+              ),
+            format = reactable::colFormat(digits = 2),
+            html = TRUE,
+            na = "NA",
+            rowHeader = TRUE
+          )
       ),
       #columnGroups = NULL,
       rownames = FALSE,

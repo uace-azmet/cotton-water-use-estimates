@@ -245,8 +245,11 @@
 }
 
 .modal-title {
-  font-weight: normal !important; 
+  color: #191919 !important;
+  font-size: 1rem;
+  /* font-weight: bold !important; */
   margin-top: 0px !important;
+  text-align: left;
 }
 
 .modebar-container {
@@ -455,12 +458,12 @@
   margin-top: 24px !important;
 }
 
-#datepickerModal {
-  color: #989898 !important;
+/* #datepickerModal {
+  color: #191919 !important;
   font-size: 1rem;
-  font-style: normal;
+  font-style: bold;
   text-align: left;
-}
+} */
 
 #downloadCSV {
   /* margin-bottom: 48px;

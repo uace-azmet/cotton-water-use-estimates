@@ -31,7 +31,7 @@ shiny::addResourcePath("shinyjs", system.file("srcjs", package = "shinyjs"))
 # Variables --------------------
 
 
-# AZMet stations -- 
+# AZMet stations -----
 
 azmetStationMetadata <- azmetr::station_info |>
   dplyr::mutate(end_date = NA) |> # Placeholder until inactive stations are in API and `azmetr`
@@ -64,13 +64,12 @@ initialStation <-
   ) %>% 
   dplyr::pull(meta_station_name)
 
-navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
+yugNodataStartDate <- lubridate::date("2021-06-16")
+yugNodataEndDate <- lubridate::date("2021-10-21")
+yugNodataInterval <- lubridate::interval(yugNodataStartDate, yugNodataEndDate)
 
-showNavsetCardTab <- reactiveVal(FALSE)
-showPageBottomText <- reactiveVal(FALSE)
 
-
-# Daily Data --
+# Daily Data -----
 
 # Derived (after data retrieved from station) variables
 dailyVarsDerived <- 
@@ -164,7 +163,7 @@ dailyVarsMeasured <-
   )
 
 
-# Hourly Data --
+# Hourly Data -----
 
 # Derived (after data retrievd from station) variables
 # hourlyVarsDerived <- 
@@ -224,7 +223,7 @@ dailyVarsMeasured <-
 #   )
 
 
-# Datepicker --
+# Datepicker -----
 
 if (Sys.Date() < as.Date(paste0(lubridate::year(Sys.Date()), "-02-02"))) {
   initialStartDate <- 
@@ -250,3 +249,10 @@ if (initialStationStartDate > initialStartDate) {
   initialStartDate <- initialStationStartDate
 }
 
+
+# Other -----
+
+navsetCardTabTitleIcon <- shiny::reactiveVal(value = "bar-chart-fill")
+
+showNavsetCardTab <- reactiveVal(FALSE)
+showPageBottomText <- reactiveVal(FALSE)
