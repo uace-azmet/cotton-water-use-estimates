@@ -7,6 +7,7 @@
 
 
 fxn_waterUse <- function(azmetStation, startDate, endDate) {
+  
   azmetStationStartDate <- 
     dplyr::filter(azmetStationMetadata, meta_station_name == azmetStation) %>% 
     dplyr::pull(start_date)
