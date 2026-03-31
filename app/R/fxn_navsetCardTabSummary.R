@@ -40,7 +40,7 @@ fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
         class = "navset-card-tab-summary"
       )
   } else if (yugNodataOverlapPreviousYear == TRUE) {
-    averageTotal <- mean(inData$total_evapotranspiration_seasonal, na.rm = TRUE)
+    averageTotal <- mean(inData$water_use_seasonal_total, na.rm = TRUE)
     
     differenceAverage <- currentYearTotal - averageTotal
     

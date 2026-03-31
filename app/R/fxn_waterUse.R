@@ -20,11 +20,29 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
     )
   
   while (startDate >= azmetStationStartDate) {
+    
+    userDateRange <- lubridate::interval(start = startDate, end = endDate)
+    
     singleYearDaily <- 
-      dplyr::filter(
-        azDaily,
-        datetime >= startDate & datetime <= endDate
-      )
+      dplyr::filter(azDaily, datetime >= startDate & datetime <= endDate)
+    
+    if (azmetStation == "Yuma N.Gila" & startDate %within% yugNodataInterval & endDate %within% yugNodataInterval) {
+      # Handle empty daily data table at YUG
+      singleYearDaily <-
+        tibble::tibble( 
+          datetime = seq(lubridate::ymd(startDate), lubridate::ymd(endDate), by = "days"),
+          meta_station_name = azmetStation,
+          eto_pen_mon_in = NA_real_,
+          heat_units_55F = NA_real_,
+          precip_total_in = NA_real_,
+          eto_pen_mon_in_acc = NA_real_,
+          heat_units_55F_acc = NA_real_,
+          precip_total_in_acc = NA_real_
+        )
+    } else {
+      singleYearDaily <- 
+        dplyr::filter(azDaily, datetime >= startDate & datetime <= endDate)
+    }
     
     singleYearDaily <- singleYearDaily %>% 
       dplyr::mutate(
@@ -117,67 +135,59 @@ fxn_waterUse <- function(azmetStation, startDate, endDate) {
           )
       )
     
+    # Account for multi-month absence of YUG data in 2021
+    if (azmetStation == "Yuma N.Gila" & lubridate::int_overlaps(int1 = yugNodataInterval, int2 = userDateRange) == TRUE) {
+      # Handle partially empty or empty daily data table at YUG
+      singleYearDaily <- singleYearDaily %>%
+        dplyr::mutate(
+          eto_pen_mon_in_acc = 
+            dplyr::if_else(
+              condition = datetime < yugNodataStartDate,
+              true = eto_pen_mon_in_acc,
+              false = NA_real_
+            ),
+          heat_units_55F_acc = 
+            dplyr::if_else(
+              condition = datetime < yugNodataStartDate,
+              true = heat_units_55F_acc,
+              false = NA_real_
+            ),
+          precip_total_in_acc = 
+            dplyr::if_else(
+              condition = datetime < yugNodataStartDate,
+              true = precip_total_in_acc,
+              false = NA_real_
+            ),
+          kc = 
+            dplyr::if_else(
+              condition = datetime < yugNodataStartDate,
+              true = kc,
+              false = NA_real_
+            ),
+          water_use_in = 
+            dplyr::if_else(
+              condition = datetime < yugNodataStartDate,
+              true = water_use_in,
+              false = NA_real_
+            ),
+          water_use_in_acc = 
+            dplyr::if_else(
+              condition = datetime < yugNodataStartDate,
+              true = water_use_in_acc,
+              false = NA_real_
+            )
+        )  
+    }
+    
     singleYearTotal <-
       fxn_waterUseSeasonalTotal(
         inData = singleYearDaily,
         azmetStation = azmetStation,
         startDate = startDate,
-        endDate = endDate
+        endDate = endDate,
+        userDateRange = userDateRange
       )
     
-    # Account for multi-month absence of YUG data in 2021
-    if (azmetStation == "Yuma N.Gila") {
-      userDateRange <- lubridate::interval(start = startDate, end = endDate)
-      
-      if (lubridate::int_overlaps(int1 = yugNodataInterval, int2 = userDateRange) == TRUE) {
-        singleYearDaily <- singleYearDaily %>%
-          dplyr::mutate(
-            eto_pen_mon_in_acc = 
-              dplyr::if_else(
-                condition = datetime < yugNodataStartDate,
-                true = eto_pen_mon_in_acc,
-                false = NA_real_
-              ),
-            heat_units_55F_acc = 
-              dplyr::if_else(
-                condition = datetime < yugNodataStartDate,
-                true = heat_units_55F_acc,
-                false = NA_real_
-              ),
-            precip_total_in_acc = 
-              dplyr::if_else(
-                condition = datetime < yugNodataStartDate,
-                true = precip_total_in_acc,
-                false = NA_real_
-              ),
-            kc = 
-              dplyr::if_else(
-                condition = datetime < yugNodataStartDate,
-                true = kc,
-                false = NA_real_
-              ),
-            water_use_in = 
-              dplyr::if_else(
-                condition = datetime < yugNodataStartDate,
-                true = water_use_in,
-                false = NA_real_
-              ),
-            water_use_in_acc = 
-              dplyr::if_else(
-                condition = datetime < yugNodataStartDate,
-                true = water_use_in_acc,
-                false = NA_real_
-              )
-          )
-        
-        singleYearTotal <- singleYearTotal %>% 
-          dplyr::mutate(
-            water_use_seasonal_total = NA_real_,
-            water_use_seasonal_total_label = "NA"
-          )
-      }
-    }
-
     # Build data tables for return
     if (exists("dailyTotals") == FALSE) {
       dailyTotals <- singleYearDaily
