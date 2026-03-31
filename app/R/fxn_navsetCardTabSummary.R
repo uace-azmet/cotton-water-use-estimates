@@ -8,18 +8,61 @@
 
 
 fxn_navsetCardTabSummary <- function(azmetStation, inData, startDate, endDate) {
+  
   currentYear <- lubridate::year(endDate)
   currentYearTotal <- 
     dplyr::filter(inData, end_date_year == currentYear) %>% 
     dplyr::pull(water_use_seasonal_total)
   
-  # For stations with only one year of data
+  if (azmetStation == "Yuma N.Gila") {
+    yugNodataOverlapPreviousYear <- 
+      lubridate::int_overlaps(
+        int1 = yugNodataInterval, 
+        int2 = lubridate::interval(
+          start = startDate - lubridate::years(1), 
+          end = endDate - lubridate::years(1)
+        )
+      )
+  } else {
+    yugNodataOverlapPreviousYear <- FALSE
+  }
+  
+  # For stations with only one year of data or YUG nodata overlap in previous year
   if (nrow(inData) == 1) {
     navsetCardTabSummary <- 
       htmltools::p(
         htmltools::HTML(
           paste0(
             "Estimated cotton water use at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>."
+          ),
+        ),
+        
+        class = "navset-card-tab-summary"
+      )
+  } else if (yugNodataOverlapPreviousYear == TRUE) {
+    averageTotal <- mean(inData$total_evapotranspiration_seasonal, na.rm = TRUE)
+    
+    differenceAverage <- currentYearTotal - averageTotal
+    
+    if (round(differenceAverage, digits = 2) > 0) {
+      differenceAverageText <- 
+        paste0(
+          format(abs(round(differenceAverage, digits = 2)), nsmall = 2), " inches above"
+        )
+    } else if (round(differenceAverage, digits = 2) < 0) {
+      differenceAverageText <- 
+        paste0(
+          format(abs(round(differenceAverage, digits = 2)), nsmall = 2), " inches below"
+        )
+    } else { # if (differenceAverage = 0)
+      differenceAverageText <- "equal to"
+    }
+    
+    navsetCardTabSummary <- 
+      htmltools::p(
+        htmltools::HTML(
+          paste0(
+            "Total evapotranspiration at the AZMet ", azmetStation, " station from ", gsub(" 0", " ", format(startDate, "%B %d, %Y")), " through ", gsub(" 0", " ", format(endDate, "%B %d, %Y")), " is ", "<b>", format(round(currentYearTotal, digits = 2), nsmall = 2), " inches</b>. This is ", differenceAverageText, " the station average."
           ),
         ),
         

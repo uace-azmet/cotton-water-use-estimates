@@ -6,6 +6,7 @@
 
 
 fxn_navsetCardTabTitle <- function(azmetStation, navsetCardTabTitleIcon) {
+  
   if (navsetCardTabTitleIcon == "bar-chart-fill") {
     iconClass = "normal-icon"
   } else {
