@@ -116,76 +116,84 @@ server <- function(input, output, session) {
   
   # Reactives -----
   
-  navsetCardBarChart <- shiny::eventReactive(waterUse(), {
-    fxn_navsetCardBarChart(
-      inData = waterUse()[[2]],
-      azmetStation = input$azmetStation
-    )
-  })
+  navsetCardBarChart <- 
+    shiny::eventReactive(waterUse(), {
+      fxn_navsetCardBarChart(
+        inData = waterUse()[[2]],
+        azmetStation = input$azmetStation
+      )
+    })
   
-  navsetCardBarChartCaption <- shiny::eventReactive(waterUse(), {
-    fxn_navsetCardBarChartCaption(
-      azmetStation = input$azmetStation,
-      inData = waterUse()[[2]],
-      startDate = input$startDate,
-      endDate = input$endDate
-    )
-  })
+  navsetCardBarChartCaption <- 
+    shiny::eventReactive(waterUse(), {
+      fxn_navsetCardBarChartCaption(
+        azmetStation = input$azmetStation,
+        inData = waterUse()[[2]],
+        startDate = input$startDate,
+        endDate = input$endDate
+      )
+    })
   
-  navsetCardTable <- shiny::eventReactive(waterUse(), {
-    fxn_navsetCardTable(
-      inData = waterUse()[[1]],
-      startDate = input$startDate,
-      endDate = input$endDate
-    )
-  })
+  navsetCardTable <- 
+    shiny::eventReactive(waterUse(), {
+      fxn_navsetCardTable(
+        inData = waterUse()[[1]],
+        startDate = input$startDate,
+        endDate = input$endDate
+      )
+    })
   
-  navsetCardTableCaption <- shiny::eventReactive(waterUse(), {
-    fxn_navsetCardTableCaption()
-  })
+  navsetCardTableCaption <- 
+    shiny::eventReactive(waterUse(), {
+      fxn_navsetCardTableCaption()
+    })
   
-  navsetCardTabSummary <- shiny::eventReactive(waterUse(), {
-    fxn_navsetCardTabSummary(
-      azmetStation = input$azmetStation,
-      inData = waterUse()[[2]],
-      startDate = input$startDate,
-      endDate = input$endDate
-    )
-  })
+  navsetCardTabSummary <- 
+    shiny::eventReactive(waterUse(), {
+      fxn_navsetCardTabSummary(
+        azmetStation = input$azmetStation,
+        inData = waterUse()[[2]],
+        startDate = input$startDate,
+        endDate = input$endDate
+      )
+    })
   
-  navsetCardTabTitle <- shiny::eventReactive(list(navsetCardTabTitleIcon(), waterUse()), {
-    fxn_navsetCardTabTitle(
-      azmetStation = input$azmetStation,
-      navsetCardTabTitleIcon = navsetCardTabTitleIcon()
-    )
-  })
+  navsetCardTabTitle <- 
+    shiny::eventReactive(list(navsetCardTabTitleIcon(), waterUse()), {
+      fxn_navsetCardTabTitle(
+        azmetStation = input$azmetStation,
+        navsetCardTabTitleIcon = navsetCardTabTitleIcon()
+      )
+    })
   
-  navsetCardTabTooltipText <- shiny::eventReactive(input$navsetCardTab, {
-    fxn_navsetCardTabTooltipText(
-      navsetCardTab = input$navsetCardTab
-    )
-  })
+  navsetCardTabTooltipText <- 
+    shiny::eventReactive(input$navsetCardTab, {
+      fxn_navsetCardTabTooltipText(navsetCardTab = input$navsetCardTab)
+    })
   
-  navsetCardTimeSeries <- shiny::eventReactive(waterUse(), {
-    fxn_navsetCardTimeSeries(
-      inData = waterUse()[[1]],
-      startDate = input$startDate,
-      endDate = input$endDate
-    )
-  })
+  navsetCardTimeSeries <- 
+    shiny::eventReactive(waterUse(), {
+      fxn_navsetCardTimeSeries(
+        inData = waterUse()[[1]],
+        startDate = input$startDate,
+        endDate = input$endDate
+      )
+    })
   
-  navsetCardTimeSeriesCaption <- shiny::eventReactive(waterUse(), {
-    fxn_navsetCardTimeSeriesCaption(
-      azmetStation = input$azmetStation,
-      inData = waterUse()[[1]],
-      startDate = input$startDate,
-      endDate = input$endDate
-    )
-  })
+  navsetCardTimeSeriesCaption <- 
+    shiny::eventReactive(waterUse(), {
+      fxn_navsetCardTimeSeriesCaption(
+        azmetStation = input$azmetStation,
+        inData = waterUse()[[1]],
+        startDate = input$startDate,
+        endDate = input$endDate
+      )
+    })
   
-  pageBottomText <- shiny::eventReactive(waterUse(), {
-    fxn_pageBottomText()
-  })
+  pageBottomText <- 
+    shiny::eventReactive(waterUse(), {
+      fxn_pageBottomText()
+    })
   
   waterUse <- shiny::eventReactive(input$estimateWaterUse, {
     # Catch input errors before data download, show error modal
@@ -230,70 +238,84 @@ server <- function(input, output, session) {
   
   # Outputs -----
   
-  output$downloadButtonsDiv <- shiny::renderUI({
-    fxn_downloadButtonsDiv()
-  })
+  output$downloadButtonsDiv <- 
+    shiny::renderUI({
+      fxn_downloadButtonsDiv()
+    })
   
-  output$downloadCSV <- shiny::downloadHandler(
-    filename = function() {"AZMet-cotton-water-use-estimates.csv"},
-    content = function(file) {
-      vroom::vroom_write(x = waterUse()[[1]], file = file, delim = ",")
-    }
-  )
+  output$downloadCSV <- 
+    shiny::downloadHandler(
+      filename = function() {"AZMet-cotton-water-use-estimates.csv"},
+      content = function(file) {
+        vroom::vroom_write(x = waterUse()[[1]], file = file, delim = ",")
+      }
+    )
   
-  output$downloadTSV <- shiny::downloadHandler(
-    filename = function() {"AZMet-cotton-water-use-estimates.tsv"},
-    content = function(file) {
-      vroom::vroom_write(x = waterUse()[[1]], file = file, delim = "\t")
-    }
-  )
+  output$downloadTSV <- 
+    shiny::downloadHandler(
+      filename = function() {"AZMet-cotton-water-use-estimates.tsv"},
+      content = function(file) {
+        vroom::vroom_write(x = waterUse()[[1]], file = file, delim = "\t")
+      }
+    )
   
-  output$navsetCardBarChart <- plotly::renderPlotly({
-    navsetCardBarChart()
-  })
+  output$navsetCardBarChart <-
+    plotly::renderPlotly({
+      navsetCardBarChart()
+    })
   
-  output$navsetCardBarChartCaption <- shiny::renderUI({
-    navsetCardBarChartCaption()
-  })
+  output$navsetCardBarChartCaption <- 
+    shiny::renderUI({
+      navsetCardBarChartCaption()
+    })
   
   # Having `navsetCardTab` as `output` helps with hiding the tabs on app start up
-  output$navsetCardTab <- shiny::renderUI({
-    shiny::req(showNavsetCardTab())
-    navsetCardTab # `scr##_navsetCardTab.R`
-  })
+  output$navsetCardTab <- 
+    shiny::renderUI({
+      shiny::req(showNavsetCardTab())
+      navsetCardTab # `scr##_navsetCardTab.R`
+    })
   
-  output$navsetCardTable <- reactable::renderReactable({
-    navsetCardTable()
-  })
+  output$navsetCardTable <- 
+    reactable::renderReactable({
+      navsetCardTable()
+    })
   
-  output$navsetCardTableCaption <- shiny::renderUI({
-    navsetCardTableCaption()
-  })
+  output$navsetCardTableCaption <- 
+    shiny::renderUI({
+      navsetCardTableCaption()
+    })
   
-  output$navsetCardTabSummary <- shiny::renderUI({
-    navsetCardTabSummary()
-  })
+  output$navsetCardTabSummary <- 
+    shiny::renderUI({
+      navsetCardTabSummary()
+    })
   
-  output$navsetCardTabTitle <- shiny::renderUI({
-    navsetCardTabTitle()
-  })
+  output$navsetCardTabTitle <- 
+    shiny::renderUI({
+      navsetCardTabTitle()
+    })
   
-  output$navsetCardTabTooltip <- shiny::renderUI({
-    navsetCardTabTooltipText()
-  })
+  output$navsetCardTabTooltip <- 
+    shiny::renderUI({
+      navsetCardTabTooltipText()
+    })
   
-  output$navsetCardTimeSeries <- plotly::renderPlotly({
-    navsetCardTimeSeries()
-  })
+  output$navsetCardTimeSeries <- 
+    plotly::renderPlotly({
+      navsetCardTimeSeries()
+    })
   
-  output$navsetCardTimeSeriesCaption <- shiny::renderUI({
-    navsetCardTimeSeriesCaption()
-  })
+  output$navsetCardTimeSeriesCaption <- 
+    shiny::renderUI({
+      navsetCardTimeSeriesCaption()
+    })
   
-  output$pageBottomText <- shiny::renderUI({
-    shiny::req(showPageBottomText())
-    pageBottomText()
-  })
+  output$pageBottomText <- 
+    shiny::renderUI({
+      shiny::req(showPageBottomText())
+      pageBottomText()
+    })
 }
 
 

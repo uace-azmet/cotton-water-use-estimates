@@ -41,22 +41,17 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
       type = "scatter",
       mode = "lines+markers",
       #color = "rgba(201, 201, 201, 1.0)",
-      marker = list(
-        color = "rgba(201, 201, 201, 1.0)",
-        size = 3
-      ),
-      line = list(
-        color = "rgba(201, 201, 201, 1.0)", 
-        width = 1
-      ),
+      marker = list(color = "rgba(201, 201, 201, 1.0)", size = 3),
+      line = list(color = "rgba(201, 201, 201, 1.0)", width = 1),
       name = "previous years",
       hoverinfo = "text",
-      text = ~paste0(
-        "<br><b>AZMet Station:</b> ", meta_station_name,
-        "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
-        "<br><b>Day<sub>season</sub>:</b> ", format(day_of_season, nsmall = 0),
-        "<br><b>WU<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
-      ),
+      text = 
+        ~paste0(
+          "<br><b>AZMet Station:</b> ", meta_station_name,
+          "<br><b>Date:</b> ", gsub(" 0", " ", format(datetime, "%b %d, %Y")),
+          "<br><b>Day<sub>season</sub>:</b> ", format(day_of_season, nsmall = 0),
+          "<br><b>WU<sub>cumulative</sub>:</b> ", format(water_use_in_acc, nsmall = 2), " inches"
+        ),
       showlegend = TRUE,
       legendgroup = "dataPreviousYears",
       legendrank = 2
@@ -89,13 +84,14 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
     plotly::config(
       displaylogo = FALSE,
       displayModeBar = TRUE,
-      modeBarButtonsToRemove = c(
-        "autoScale2d",
-        "hoverClosestCartesian", 
-        "hoverCompareCartesian", 
-        "lasso2d",
-        "select"
-      ),
+      modeBarButtonsToRemove = 
+        c(
+          "autoScale2d",
+          "hoverClosestCartesian", 
+          "hoverCompareCartesian", 
+          "lasso2d",
+          "select"
+        ),
       scrollZoom = FALSE,
       toImageButtonOptions = 
         list(
@@ -108,16 +104,8 @@ fxn_navsetCardTimeSeries <- function(inData, startDate, endDate) {
     ) %>%
     
     plotly::layout(
-      font = 
-        list(
-          color = "#191919",
-          family = layoutFontFamily,
-          size = 13
-        ),
-      hoverlabel = 
-        list(
-          font = list(family = layoutFontFamily, size = 14)
-        ),
+      font = list(color = "#191919", family = layoutFontFamily, size = 13),
+      hoverlabel = list(font = list(family = layoutFontFamily, size = 14)),
       legend = 
         list(
           groupclick = "toggleitem",

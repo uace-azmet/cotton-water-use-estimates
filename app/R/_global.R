@@ -12,6 +12,7 @@ library(plotly)
 library(reactable)
 library(shiny)
 library(shinyjs)
+library(tibble)
 library(tidyr)
 library(vroom)
 
@@ -52,10 +53,7 @@ azmetStationMetadata <- azmetr::station_info |>
   dplyr::filter(!meta_station_name %in% c("Test"))
 
 activeStations <-
-  dplyr::filter(
-    azmetStationMetadata,
-    status == "active"
-  )
+  dplyr::filter(azmetStationMetadata, status == "active")
 
 initialStation <-
   dplyr::filter(
@@ -119,7 +117,7 @@ dailyVarsDerived <-
 dailyVarsID <- 
   c(
     # "date_doy", 
-    "date_year", 
+    # "date_year", 
     "datetime", 
     # "meta_needs_review", 
     # "meta_station_id", 
